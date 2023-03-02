@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>BitzArt.CA.Persistence</RootNamespace>
+
+		<PackageId>BitzArt.CA.Persistence.EntityFrameworkCore</PackageId>
+		<Authors>BitzArt</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/BitzArt/CA-Boilerplate</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/BitzArt/CA-Boilerplate</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BitzArt.LinqExtensions" Version="1.1.1" />
+		<PackageReference Include="BitzArt.Pagination.EntityFrameworkCore" Version="1.13.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\BitzArt.CA.Persistence\BitzArt.CA.Persistence.csproj" />
+	</ItemGroup>
+
+</Project>
