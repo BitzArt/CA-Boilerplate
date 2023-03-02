@@ -7,15 +7,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E4266983-5F3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.Core", "src\BitzArt.CA.Core\BitzArt.CA.Core.csproj", "{70C33A67-8D55-4566-9CE3-10DB1F3CDBE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitzArt.CA.Infrastructure", "src\BitzArt.CA.Infrastructure\BitzArt.CA.Infrastructure.csproj", "{0EDE00EE-2322-4E00-AAB6-16F4B0C09E03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.Infrastructure", "src\BitzArt.CA.Infrastructure\BitzArt.CA.Infrastructure.csproj", "{0EDE00EE-2322-4E00-AAB6-16F4B0C09E03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitzArt.CA.Persistence", "src\BitzArt.CA.Persistence\BitzArt.CA.Persistence.csproj", "{CE954C7D-B2F7-4FD0-8183-8117FB167055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.Persistence", "src\BitzArt.CA.Persistence\BitzArt.CA.Persistence.csproj", "{CE954C7D-B2F7-4FD0-8183-8117FB167055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitzArt.CA.Persistence.EntityFrameworkCore", "src\BitzArt.CA.Persistence.EntityFrameworkCore\BitzArt.CA.Persistence.EntityFrameworkCore.csproj", "{B7B677B4-E0CA-4BB3-BB38-4DA5E8B5E4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.Persistence.EntityFrameworkCore", "src\BitzArt.CA.Persistence.EntityFrameworkCore\BitzArt.CA.Persistence.EntityFrameworkCore.csproj", "{B7B677B4-E0CA-4BB3-BB38-4DA5E8B5E4A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitzArt.CA.Persistence.EntityFrameworkCore.Relational", "src\BitzArt.CA.Persistence.EntityFrameworkCore.Relational\BitzArt.CA.Persistence.EntityFrameworkCore.Relational.csproj", "{E2080F62-BDB8-429F-B8B5-9654E7794F51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.Persistence.EntityFrameworkCore.Relational", "src\BitzArt.CA.Persistence.EntityFrameworkCore.Relational\BitzArt.CA.Persistence.EntityFrameworkCore.Relational.csproj", "{E2080F62-BDB8-429F-B8B5-9654E7794F51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitzArt.CA.Infrastructure.AspNetCore", "src\BitzArt.CA.Infrastructure.AspNetCore\BitzArt.CA.Infrastructure.AspNetCore.csproj", "{D18453E7-DB13-4D46-8148-30CD39A86CD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.Infrastructure.AspNetCore", "src\BitzArt.CA.Infrastructure.AspNetCore\BitzArt.CA.Infrastructure.AspNetCore.csproj", "{D18453E7-DB13-4D46-8148-30CD39A86CD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.Presentation", "src\BitzArt.CA.Presentation\BitzArt.CA.Presentation.csproj", "{FAA4837E-89B8-40B2-80CF-7ED06F8018B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{1A7F8179-013F-4E84-BCBC-1F763593F45F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C76EE6F4-8B4B-43A8-9B72-F1AFA0B28AAB}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\Publish CA-boilerplate.yml = .github\workflows\Publish CA-boilerplate.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +56,10 @@ Global
 		{D18453E7-DB13-4D46-8148-30CD39A86CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D18453E7-DB13-4D46-8148-30CD39A86CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D18453E7-DB13-4D46-8148-30CD39A86CD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAA4837E-89B8-40B2-80CF-7ED06F8018B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAA4837E-89B8-40B2-80CF-7ED06F8018B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAA4837E-89B8-40B2-80CF-7ED06F8018B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAA4837E-89B8-40B2-80CF-7ED06F8018B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +71,8 @@ Global
 		{B7B677B4-E0CA-4BB3-BB38-4DA5E8B5E4A7} = {E4266983-5F35-49B6-9E80-FBFB33E60CB7}
 		{E2080F62-BDB8-429F-B8B5-9654E7794F51} = {E4266983-5F35-49B6-9E80-FBFB33E60CB7}
 		{D18453E7-DB13-4D46-8148-30CD39A86CD4} = {E4266983-5F35-49B6-9E80-FBFB33E60CB7}
+		{FAA4837E-89B8-40B2-80CF-7ED06F8018B8} = {E4266983-5F35-49B6-9E80-FBFB33E60CB7}
+		{C76EE6F4-8B4B-43A8-9B72-F1AFA0B28AAB} = {1A7F8179-013F-4E84-BCBC-1F763593F45F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D73C9954-971C-466D-A99C-C6D30492FF9C}
