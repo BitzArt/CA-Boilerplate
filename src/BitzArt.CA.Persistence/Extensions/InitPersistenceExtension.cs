@@ -4,9 +4,8 @@ namespace BitzArt.CA.Persistence;
 
 public static class InitPersistenceExtension
 {
-    public static void InitPersistence(this IServiceProvider serviceProvider)
+    public static void InitPersistence(this IServiceScope scope)
     {
-        using var scope = serviceProvider.CreateScope();
         var service = scope.ServiceProvider.GetService<IPersistenceInitializationService>();
         service?.InitAsync().Wait();
     }
