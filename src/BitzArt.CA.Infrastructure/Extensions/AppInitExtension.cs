@@ -5,7 +5,7 @@ namespace BitzArt.CA;
 
 public static class AppInitExtension
 {
-    public static void Init<T>(this IHost host, Func<IServiceScope, T> action)
+    public static void Init(this IHost host, Action<IServiceScope> action)
     {
         using var scope = host.Services.CreateScope();
         action.Invoke(scope);
