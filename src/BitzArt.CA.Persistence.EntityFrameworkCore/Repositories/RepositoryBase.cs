@@ -10,9 +10,13 @@ public abstract class RepositoryBase : IRepository
     }
 
     public async Task<int> SaveChangesAsync() => await Db.SaveChangesAsync();
+}
 
-    public void Delete<T>(T entity)
-    {
-        Db.Remove(entity!);
-    }
+public abstract class RepositoryBase<TEntity> : RepositoryBase
+    where TEntity : class
+{
+    protected RepositoryBase(AppDbContext db) : base(db) { }
+
+    public void Add(TEntity entity) => Db.Add(entity);
+    public void Remove(TEntity entity) => Db.Remove(entity);
 }
