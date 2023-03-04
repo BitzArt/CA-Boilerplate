@@ -10,4 +10,9 @@ public abstract class RepositoryBase : IRepository
     }
 
     public async Task<int> SaveChangesAsync() => await Db.SaveChangesAsync();
+
+    public void Delete<T>(T entity)
+    {
+        Db.Remove(entity!);
+    }
 }
