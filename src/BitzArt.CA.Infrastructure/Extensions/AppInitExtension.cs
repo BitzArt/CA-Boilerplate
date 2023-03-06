@@ -9,11 +9,13 @@ public static class AppInitExtension
 {
     public static void Init(this IHost host, Action<IServiceScope> action)
     {
-        var sw = Stopwatch.StartNew();
         using var scope = host.Services.CreateScope();
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<IHost>>();
+
+        logger.LogInformation("Starting App initialization...");
+        var sw = Stopwatch.StartNew();
         action.Invoke(scope);
         sw.Stop();
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<IHost>>();
         logger.LogInformation("App initialization completed in {ms} ms", sw.ElapsedMilliseconds);
     }
 }
