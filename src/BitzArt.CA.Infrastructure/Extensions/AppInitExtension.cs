@@ -10,9 +10,9 @@ public static class AppInitExtension
     public static void Init(this IHost host, Action<IServiceScope> action)
     {
         using var scope = host.Services.CreateScope();
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<IHost>>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("Microsoft.Hosting.Lifetime");
 
-        logger.LogInformation("Starting App initialization...");
+        logger.LogInformation("App initialization started...");
         var sw = Stopwatch.StartNew();
         action.Invoke(scope);
         sw.Stop();
