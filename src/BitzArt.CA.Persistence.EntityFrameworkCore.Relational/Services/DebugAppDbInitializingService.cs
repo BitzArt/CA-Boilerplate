@@ -14,21 +14,23 @@ public class DebugAppDbInitializingService<TContext> : AppDbInitializingService<
     {
         try
         {
+            Logger.LogWarning("Database initializer running with Debug operations allowed!");
+
             await db.Database.MigrateAsync(ct);
         }
-        catch (Exception)
+        catch (Exception exception)
         {
-            Logger.LogInformation("An exception occured while attempting to initialize database.");
+            Logger.LogWarning("An exception occured while attempting to initialize database. Message: {message}", exception.Message);
 
-            Logger.LogInformation("DEBUG: Resetting database. All data will be cleared!");
+            Logger.LogWarning("Resetting database. All data will be cleared!");
 
             await db.Database.EnsureDeletedAsync(ct);
 
-            Logger.LogInformation("DEBUG: Database cleared successfully.");
+            Logger.LogWarning("Database cleared successfully.");
 
             await db.Database.MigrateAsync(ct);
 
-            Logger.LogInformation("DEBUG: Database re-created successfully.");
+            Logger.LogWarning("DEBUG: Database re-created successfully.");
         }
     }
 }
