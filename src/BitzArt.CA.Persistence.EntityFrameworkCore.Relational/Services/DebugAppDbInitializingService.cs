@@ -12,25 +12,33 @@ public class DebugAppDbInitializingService<TContext> : AppDbInitializingService<
 
     protected override async Task MigrateAsync(TContext db, CancellationToken ct)
     {
-        try
+        Logger.LogWarning("Database debug operations are allowed.");
+
+        var applied = await db.Database.GetAppliedMigrationsAsync(ct);
+        var current = db.Database.GetMigrations();
+
+        var unknown = applied.FirstOrDefault(x => !current.Contains(x));
+        if (unknown is not null)
         {
-            Logger.LogWarning("Database initializer running with Debug operations allowed!");
-
-            await db.Database.MigrateAsync(ct);
+            await ResetDatabaseAsync(db, unknown, ct);
+            return;
         }
-        catch (Exception exception)
-        {
-            Logger.LogWarning("An exception occured while attempting to initialize database. Message: {message}", exception.Message);
 
-            Logger.LogWarning("Resetting database. All data will be cleared!");
+        await db.Database.MigrateAsync(ct);
+    }
 
-            await db.Database.EnsureDeletedAsync(ct);
+    private async Task ResetDatabaseAsync(TContext db, string unknown, CancellationToken ct)
+    {
+        Logger.LogCritical("Migration Conflict!");
+        Logger.LogWarning("Found unknown applied migration: {unknown}", unknown);
+        Logger.LogWarning("Resetting database. All data will be deleted!");
 
-            Logger.LogWarning("Database cleared successfully.");
+        await db.Database.EnsureDeletedAsync(ct);
 
-            await db.Database.MigrateAsync(ct);
+        Logger.LogWarning("Database deleted successfully.");
 
-            Logger.LogWarning("DEBUG: Database re-created successfully.");
-        }
+        await db.Database.MigrateAsync(ct);
+
+        Logger.LogWarning("Database re-created successfully.");
     }
 }
