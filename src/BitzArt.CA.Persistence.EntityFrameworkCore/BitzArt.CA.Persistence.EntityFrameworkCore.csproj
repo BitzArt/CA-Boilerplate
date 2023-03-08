@@ -8,6 +8,7 @@
 
 		<PackageId>BitzArt.CA.Persistence.EntityFrameworkCore</PackageId>
 		<Authors>BitzArt</Authors>
+		<Description>Clean Architecture boilerplate. Persistence library for EF Core</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/BitzArt/CA-Boilerplate</RepositoryUrl>
@@ -15,7 +16,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BitzArt.LinqExtensions" Version="1.1.1" />
+		<PackageReference Include="BitzArt.LinqExtensions" Version="1.1.2" />
 		<PackageReference Include="BitzArt.Pagination.EntityFrameworkCore" Version="1.13.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
 	</ItemGroup>

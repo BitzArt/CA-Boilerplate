@@ -8,6 +8,7 @@
 
 		<PackageId>BitzArt.CA.Presentation</PackageId>
 		<Authors>BitzArt</Authors>
+		<Description>Clean Architecture boilerplate. Presentation library</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/BitzArt/CA-Boilerplate</RepositoryUrl>
@@ -15,6 +16,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="BitzArt.FluentValidation.Extensions" Version="0.0.2" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
 		<PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
 	</ItemGroup>

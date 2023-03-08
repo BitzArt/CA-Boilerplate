@@ -8,6 +8,7 @@
 
 		<PackageId>BitzArt.CA.Persistence.EntityFrameworkCore.Relational</PackageId>
 		<Authors>BitzArt</Authors>
+		<Description>Clean Architecture boilerplate. Persistence library for relational EF Core</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/BitzArt/CA-Boilerplate</RepositoryUrl>

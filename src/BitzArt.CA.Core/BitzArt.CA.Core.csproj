@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -8,6 +8,7 @@
 
 		<PackageId>BitzArt.CA.Core</PackageId>
 		<Authors>BitzArt</Authors>
+		<Description>Clean Architecture boilerplate. Core library</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/BitzArt/CA-Boilerplate</RepositoryUrl>
@@ -16,7 +17,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="BitzArt.ApiExceptions" Version="1.12.0" />
-		<PackageReference Include="BitzArt.Miscellaneous.EnumToMemberValue" Version="1.2.0" />
+		<PackageReference Include="BitzArt.EnumToMemberValue" Version="1.0.0" />
 		<PackageReference Include="BitzArt.Pagination" Version="1.13.0" />
 	</ItemGroup>
 
