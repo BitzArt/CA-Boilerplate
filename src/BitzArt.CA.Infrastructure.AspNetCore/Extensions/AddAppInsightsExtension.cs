@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationInsights.DependencyCollector;
+﻿using Azureblue.ApplicationInsights.RequestLogging;
+using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,7 +7,7 @@ namespace BitzArt.CA;
 
 public static class AddAppInsightsExtension
 {
-    public static IServiceCollection AddApplicationInsights(this IServiceCollection services, IConfiguration configuration, bool enableLogging = false)
+    public static IServiceCollection AddApplicationInsights(this IServiceCollection services, IConfiguration configuration, bool fullLogging = false)
     {
         if (!configuration
             .GetSection("ApplicationInsights")
@@ -14,13 +15,15 @@ public static class AddAppInsightsExtension
 
         services.AddApplicationInsightsTelemetry();
 
-        if (enableLogging) services.EnableSqlLogging();
+        if (fullLogging) services.AddFullLogging();
 
         return services;
     }
 
-    private static void EnableSqlLogging(this IServiceCollection services)
+    private static void AddFullLogging(this IServiceCollection services)
     {
+        services.AddAppInsightsHttpBodyLogging();
+
         services
             .ConfigureTelemetryModule<DependencyTrackingTelemetryModule>((module, o) =>
         {
