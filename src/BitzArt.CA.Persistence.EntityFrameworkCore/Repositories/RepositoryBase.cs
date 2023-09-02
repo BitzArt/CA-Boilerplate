@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
 
 namespace BitzArt.CA.Persistence;
 
@@ -15,17 +14,9 @@ public abstract class RepositoryBase : IRepository
     public virtual async Task<int> SaveChangesAsync()
     {
         using var saveActivity = Activity.Current?.Source
-            .StartActivity($"{GetCallerType()}: SaveChanges");
-        
+            .StartActivity($"{GetType().Name}: SaveChanges");
+
         return await Db.SaveChangesAsync();
-    }
-
-    private static string GetCallerType()
-    {
-        var methodInfo = new StackTrace().GetFrame(1)!.GetMethod()!;
-        var className = methodInfo.ReflectedType!.Name;
-
-        return className;
     }
 }
 
