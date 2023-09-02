@@ -15,9 +15,17 @@ public abstract class RepositoryBase : IRepository
     public virtual async Task<int> SaveChangesAsync()
     {
         using var saveActivity = Activity.Current?.Source
-            .StartActivity($"{MethodBase.GetCurrentMethod()!.DeclaringType!.Name}: SaveChanges");
+            .StartActivity($"{GetCallerType()}: SaveChanges");
         
         return await Db.SaveChangesAsync();
+    }
+
+    private static string GetCallerType()
+    {
+        var methodInfo = new StackTrace().GetFrame(1)!.GetMethod()!;
+        var className = methodInfo.ReflectedType!.Name;
+
+        return className;
     }
 }
 
