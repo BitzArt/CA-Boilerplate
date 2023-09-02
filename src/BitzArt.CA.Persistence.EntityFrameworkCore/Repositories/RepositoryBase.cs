@@ -1,4 +1,7 @@
-﻿namespace BitzArt.CA.Persistence;
+﻿using System.Diagnostics;
+using System.Reflection;
+
+namespace BitzArt.CA.Persistence;
 
 public abstract class RepositoryBase : IRepository
 {
@@ -9,7 +12,13 @@ public abstract class RepositoryBase : IRepository
         Db = db;
     }
 
-    public virtual async Task<int> SaveChangesAsync() => await Db.SaveChangesAsync();
+    public virtual async Task<int> SaveChangesAsync()
+    {
+        using var saveActivity = Activity.Current?.Source
+            .StartActivity($"{MethodBase.GetCurrentMethod()!.DeclaringType!.Name}: SaveChanges");
+        
+        return await Db.SaveChangesAsync();
+    }
 }
 
 public abstract class RepositoryBase<TEntity> : RepositoryBase
