@@ -21,5 +21,5 @@ internal class TestAuditable : IAuditable
 
     public DateTimeOffset? CreatedAt { get; set; }
 
-    public DateTimeOffset? UpdatedAt { get; set; }
+    public DateTimeOffset? LastUpdatedAt { get; set; }
 }

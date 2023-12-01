@@ -54,11 +54,11 @@ public class AuditableTests
         _db.SaveChanges();
 
         Assert.NotNull(entity.CreatedAt);
-        Assert.NotNull(entity.UpdatedAt);
+        Assert.NotNull(entity.LastUpdatedAt);
 
         var createdAt = entity.CreatedAt;
         Assert.True(createdAt - now < TimeSpan.FromMilliseconds(1));
-        var updatedAt = entity.UpdatedAt;
+        var updatedAt = entity.LastUpdatedAt;
         Assert.True(updatedAt - now < TimeSpan.FromMilliseconds(1));
 
         entity.Name = "updated";
@@ -66,7 +66,7 @@ public class AuditableTests
 
         Assert.NotNull(entity.CreatedAt);
         Assert.Equal(createdAt, entity.CreatedAt);
-        Assert.NotNull(entity.UpdatedAt);
-        Assert.NotEqual(updatedAt, entity.UpdatedAt);
+        Assert.NotNull(entity.LastUpdatedAt);
+        Assert.NotEqual(updatedAt, entity.LastUpdatedAt);
     }
 }
