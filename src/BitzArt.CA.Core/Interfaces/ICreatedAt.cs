@@ -1,4 +1,4 @@
-﻿namespace BitzArt.CA.Persistence;
+﻿namespace BitzArt.CA;
 
 public interface ICreatedAt
 {
