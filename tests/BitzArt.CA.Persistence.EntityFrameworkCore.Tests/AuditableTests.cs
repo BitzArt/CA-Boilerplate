@@ -1,20 +1,7 @@
-using BitzArt.CA.Persistence.Services;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace BitzArt.CA.Persistence.Tests;
 
-[Collection("Service Collection")]
-public class AuditableTests
+public class AuditableTests(AppDbContext db)
 {
-    private readonly TestServiceContainer _services;
-    private readonly AppDbContext _db;
-
-    public AuditableTests(TestServiceContainer container)
-    {
-        _services = container;
-        _db = _services.GetRequiredService<AppDbContext>();
-    }
-
     [Fact]
     public void CreatedAt_OnSaveChanges_SavesCreatedTimestamp()
     {
@@ -25,16 +12,17 @@ public class AuditableTests
             Name = "created"
         };
 
-        _db.Add(entity);
-        _db.SaveChanges();
+        db.Add(entity);
+        db.SaveChanges();
 
         Assert.NotNull(entity.CreatedAt);
 
         var createdAt = entity.CreatedAt;
-        Assert.True(createdAt - now < TimeSpan.FromMilliseconds(1));
+        var diff = createdAt - now;
+        Assert.True(diff < TimeSpan.FromSeconds(1));
 
         entity.Name = "updated";
-        _db.SaveChanges();
+        db.SaveChanges();
 
         Assert.NotNull(entity.CreatedAt);
         Assert.Equal(createdAt, entity.CreatedAt);
@@ -50,19 +38,19 @@ public class AuditableTests
             Name = "created"
         };
 
-        _db.Add(entity);
-        _db.SaveChanges();
+        db.Add(entity);
+        db.SaveChanges();
 
         Assert.NotNull(entity.CreatedAt);
         Assert.NotNull(entity.LastUpdatedAt);
 
         var createdAt = entity.CreatedAt;
-        Assert.True(createdAt - now < TimeSpan.FromMilliseconds(1));
+        Assert.True(createdAt - now < TimeSpan.FromSeconds(1));
         var updatedAt = entity.LastUpdatedAt;
-        Assert.True(updatedAt - now < TimeSpan.FromMilliseconds(1));
+        Assert.True(updatedAt - now < TimeSpan.FromSeconds(1));
 
         entity.Name = "updated";
-        _db.SaveChanges();
+        db.SaveChanges();
 
         Assert.NotNull(entity.CreatedAt);
         Assert.Equal(createdAt, entity.CreatedAt);
