@@ -26,6 +26,8 @@ public class TestServiceContainer : IDisposable, IServiceProvider
 
     public IServiceProvider ServiceProvider => _services.CreateScope().ServiceProvider;
 	
+    // TODO: Tests don't work, dotnet 8 broke SQLite. Fix this later.
+
 	public TestServiceContainer()
 	{
         var services = new ServiceCollection();

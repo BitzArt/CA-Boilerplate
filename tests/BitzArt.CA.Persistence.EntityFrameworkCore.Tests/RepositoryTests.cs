@@ -1,6 +1,5 @@
 using BitzArt.CA.Persistence.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics;
 
 namespace BitzArt.CA.Persistence.Tests;
 
