@@ -2,5 +2,5 @@
 
 public interface IAuditable : ICreatedAt
 {
-    public DateTimeOffset? UpdatedAt { get; set; }
+    public DateTimeOffset? LastUpdatedAt { get; set; }
 }
