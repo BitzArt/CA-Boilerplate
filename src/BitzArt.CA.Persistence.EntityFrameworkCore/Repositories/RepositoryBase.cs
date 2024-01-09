@@ -27,4 +27,12 @@ public abstract class RepositoryBase<TEntity> : RepositoryBase
 
     public void Add(TEntity entity) => Db.Add(entity);
     public void Remove(TEntity entity) => Db.Remove(entity);
+
+    protected IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
+    {
+        var result = Db.Set<TEntity>() as IQueryable<TEntity>;
+        if (filter is not null) result = result.Apply(filter);
+
+        return result;
+    }
 }

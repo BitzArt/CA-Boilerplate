@@ -19,9 +19,10 @@ public static class UseTestContainerSqlServerExtension
         var container = new MsSqlBuilder()
             .WithName($"{assemblyName}.SqlServer")
             .WithPassword("P@ssw0rd")
+            .WithPortBinding(8081, true)
             .Build();
 
-        container.StartAsync().Wait();
+        container.StartAsync().Wait(20000);
 
         var connectionString = container
             .GetConnectionString()
