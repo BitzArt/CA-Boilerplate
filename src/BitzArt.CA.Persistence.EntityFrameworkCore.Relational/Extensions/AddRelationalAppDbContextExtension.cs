@@ -5,7 +5,7 @@ namespace BitzArt.CA.Persistence;
 
 public static class AddRelationalAppDbContextExtension
 {
-    public static IServiceCollection AddRelationalAppDbContext<TContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options)
+    public static IServiceCollection AddRelationalAppDbContext<TContext>(this IServiceCollection services, Action<DbContextOptionsBuilder<TContext>> options)
         where TContext : RelationalAppDbContext
     {
         services.AddDbContext<TContext>(options);
