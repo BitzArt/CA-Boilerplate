@@ -20,7 +20,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Azureblue.ApplicationInsights.RequestLogging" Version="2.1.1" />
+		<PackageReference Include="Azureblue.ApplicationInsights.RequestLogging" Version="2.2.0" />
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
 	</ItemGroup>
 
