@@ -17,9 +17,9 @@ public static class UseTestContainerSqlServerExtension
             .Name;
 
         var container = new MsSqlBuilder()
+            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .WithName($"{assemblyName}.SqlServer")
             .WithPassword("P@ssw0rd")
-            .WithPortBinding(8081, true)
             .Build();
 
         container.StartAsync().Wait(20000);
