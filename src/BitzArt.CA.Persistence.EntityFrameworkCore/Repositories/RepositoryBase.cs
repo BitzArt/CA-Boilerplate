@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using BitzArt.Pagination;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BitzArt.CA.Persistence;
 
@@ -20,7 +22,7 @@ public abstract class RepositoryBase : IRepository
     }
 }
 
-public abstract class RepositoryBase<TEntity> : RepositoryBase
+public abstract class RepositoryBase<TEntity> : RepositoryBase, IRepository<TEntity>
     where TEntity : class
 {
     protected RepositoryBase(AppDbContext db) : base(db) { }
@@ -31,6 +33,50 @@ public abstract class RepositoryBase<TEntity> : RepositoryBase
     protected virtual IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
     {
         var result = Db.Set<TEntity>() as IQueryable<TEntity>;
+        if (filter is not null) result = result.Apply(filter);
+
+        return result;
+    }
+
+    public virtual async Task<TEntity?> GetAsync(IFilterSet<TEntity> filter)
+    {
+        return await Set(filter)
+            .FirstOrDefaultAsync();
+    }
+
+    public virtual async Task<int> CountAsync(IFilterSet<TEntity>? filter = null)
+    {
+        return await Set(filter)
+            .CountAsync();
+    }
+
+    public virtual async Task<bool> AnyAsync(IFilterSet<TEntity>? filter = null)
+    {
+        return await Set(filter)
+            .AnyAsync();
+    }
+
+    public virtual async Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null)
+    {
+        return await Set(filter)
+            .ToPageAsync(pageRequest);
+    }
+}
+
+public abstract class RepositoryBase<TEntity, TKey> : RepositoryBase<TEntity>
+    where TEntity : class, IEntity<TKey>
+    where TKey : struct
+{
+    protected RepositoryBase(AppDbContext db) : base(db) { }
+
+    protected override IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
+    {
+        var result = Db.Set<TEntity>() as IQueryable<TEntity>;
+
+        // Default behavior: order by Id,
+        result = result.OrderBy(x => x.Id);
+
+        // Default ordering may be overridden when applying the filter
         if (filter is not null) result = result.Apply(filter);
 
         return result;
