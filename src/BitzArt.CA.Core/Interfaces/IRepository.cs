@@ -4,7 +4,7 @@ namespace BitzArt.CA;
 
 public interface IRepository
 {
-    Task<int> SaveChangesAsync();
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
 public interface IRepository<TEntity> : IRepository
@@ -12,8 +12,8 @@ public interface IRepository<TEntity> : IRepository
 {
     public void Add(TEntity entity);
     public void Remove(TEntity entity);
-    public Task<TEntity?> GetAsync(IFilterSet<TEntity> filter);
-    public Task<int> CountAsync(IFilterSet<TEntity>? filter = null);
-    public Task<bool> AnyAsync(IFilterSet<TEntity>? filter = null);
-    public Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null);
+    public Task<TEntity?> GetAsync(IFilterSet<TEntity> filter, CancellationToken cancellationToken = default);
+    public Task<int> CountAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default);
+    public Task<bool> AnyAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default);
+    public Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default);
 }

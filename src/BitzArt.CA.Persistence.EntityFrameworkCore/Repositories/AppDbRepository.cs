@@ -13,12 +13,12 @@ public abstract class AppDbRepository : IRepository
         Db = db;
     }
 
-    public virtual async Task<int> SaveChangesAsync()
+    public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         using var saveActivity = Activity.Current?.Source
             .StartActivity($"{GetType().Name}: SaveChanges");
 
-        return await Db.SaveChangesAsync();
+        return await Db.SaveChangesAsync(cancellationToken);
     }
 }
 
@@ -38,28 +38,28 @@ public class AppDbRepository<TEntity> : AppDbRepository, IRepository<TEntity>
         return result;
     }
 
-    public virtual async Task<TEntity?> GetAsync(IFilterSet<TEntity> filter)
+    public virtual async Task<TEntity?> GetAsync(IFilterSet<TEntity> filter, CancellationToken cancellationToken = default)
     {
         return await Set(filter)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public virtual async Task<int> CountAsync(IFilterSet<TEntity>? filter = null)
+    public virtual async Task<int> CountAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
     {
         return await Set(filter)
-            .CountAsync();
+            .CountAsync(cancellationToken);
     }
 
-    public virtual async Task<bool> AnyAsync(IFilterSet<TEntity>? filter = null)
+    public virtual async Task<bool> AnyAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
     {
         return await Set(filter)
-            .AnyAsync();
+            .AnyAsync(cancellationToken);
     }
 
-    public virtual async Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null)
+    public virtual async Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
     {
         return await Set(filter)
-            .ToPageAsync(pageRequest);
+            .ToPageAsync(pageRequest, cancellationToken);
     }
 }
 
