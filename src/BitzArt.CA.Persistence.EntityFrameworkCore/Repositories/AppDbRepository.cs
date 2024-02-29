@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace BitzArt.CA.Persistence;
 
-public abstract class RepositoryBase : IRepository
+public abstract class AppDbRepository : IRepository
 {
     protected readonly AppDbContext Db;
 
-    protected RepositoryBase(AppDbContext db)
+    protected AppDbRepository(AppDbContext db)
     {
         Db = db;
     }
@@ -22,10 +22,10 @@ public abstract class RepositoryBase : IRepository
     }
 }
 
-public abstract class RepositoryBase<TEntity> : RepositoryBase, IRepository<TEntity>
+public class AppDbRepository<TEntity> : AppDbRepository, IRepository<TEntity>
     where TEntity : class
 {
-    protected RepositoryBase(AppDbContext db) : base(db) { }
+    protected AppDbRepository(AppDbContext db) : base(db) { }
 
     public void Add(TEntity entity) => Db.Add(entity);
     public void Remove(TEntity entity) => Db.Remove(entity);
@@ -63,11 +63,11 @@ public abstract class RepositoryBase<TEntity> : RepositoryBase, IRepository<TEnt
     }
 }
 
-public abstract class RepositoryBase<TEntity, TKey> : RepositoryBase<TEntity>
+public class AppDbRepository<TEntity, TKey> : AppDbRepository<TEntity>
     where TEntity : class, IEntity<TKey>
     where TKey : struct
 {
-    protected RepositoryBase(AppDbContext db) : base(db) { }
+    protected AppDbRepository(AppDbContext db) : base(db) { }
 
     protected override IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
     {
