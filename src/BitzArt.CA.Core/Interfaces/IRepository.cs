@@ -7,7 +7,7 @@ public interface IRepository
     Task<int> SaveChangesAsync();
 }
 
-public interface IRepository<TEntity>
+public interface IRepository<TEntity> : IRepository
     where TEntity : class
 {
     public void Add(TEntity entity);
