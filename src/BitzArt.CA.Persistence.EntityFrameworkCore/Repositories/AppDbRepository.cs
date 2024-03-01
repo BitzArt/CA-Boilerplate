@@ -4,14 +4,9 @@ using System.Diagnostics;
 
 namespace BitzArt.CA.Persistence;
 
-public abstract class AppDbRepository : IRepository
+public abstract class AppDbRepository(AppDbContext db) : IRepository
 {
-    protected readonly AppDbContext Db;
-
-    protected AppDbRepository(AppDbContext db)
-    {
-        Db = db;
-    }
+    protected readonly AppDbContext Db = db;
 
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -22,11 +17,9 @@ public abstract class AppDbRepository : IRepository
     }
 }
 
-public class AppDbRepository<TEntity> : AppDbRepository, IRepository<TEntity>
+public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IRepository<TEntity>
     where TEntity : class
 {
-    protected AppDbRepository(AppDbContext db) : base(db) { }
-
     public void Add(TEntity entity) => Db.Add(entity);
     public void Remove(TEntity entity) => Db.Remove(entity);
 
@@ -63,12 +56,10 @@ public class AppDbRepository<TEntity> : AppDbRepository, IRepository<TEntity>
     }
 }
 
-public class AppDbRepository<TEntity, TKey> : AppDbRepository<TEntity>
+public class AppDbRepository<TEntity, TKey>(AppDbContext db) : AppDbRepository<TEntity>(db)
     where TEntity : class, IEntity<TKey>
     where TKey : struct
 {
-    protected AppDbRepository(AppDbContext db) : base(db) { }
-
     protected override IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
     {
         var result = Db.Set<TEntity>() as IQueryable<TEntity>;
