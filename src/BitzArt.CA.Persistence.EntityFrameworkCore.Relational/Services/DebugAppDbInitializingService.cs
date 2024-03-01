@@ -10,9 +10,21 @@ public class DebugAppDbInitializingService<TContext> : AppDbInitializingService<
         : base(db, logger) { }
 
 
-    protected override async Task MigrateAsync(TContext db, CancellationToken ct)
+    public override async Task InitializeAsync(CancellationToken ct = default)
     {
         Logger.LogWarning("Database debug operations are allowed.");
+        Logger.LogInformation("Skipping database connection check.");
+
+        Logger.LogInformation("Attempting to initialize database...");
+
+        await MigrateAsync(_db, ct);
+
+        Logger.LogInformation("Database initialized successfully");
+    }
+
+    protected override async Task MigrateAsync(TContext db, CancellationToken ct)
+    {
+        
 
         var applied = await db.Database.GetAppliedMigrationsAsync(ct);
         var current = db.Database.GetMigrations();

@@ -15,7 +15,7 @@ public class AppDbInitializingService<TContext> : IAppDbInitializingService
         Logger = logger;
     }
 
-    public async Task InitializeAsync(CancellationToken ct = default)
+    public virtual async Task InitializeAsync(CancellationToken ct = default)
     {
         CheckDatabaseConnection(_db, 5000, ct);
         Logger.LogInformation("Attempting to initialize database...");
