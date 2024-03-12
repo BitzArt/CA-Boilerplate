@@ -21,7 +21,9 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     where TEntity : class
 {
     public void Add(TEntity entity) => Db.Add(entity);
+    public void AddRange(IEnumerable<TEntity> entities) => Db.AddRange(entities);
     public void Remove(TEntity entity) => Db.Remove(entity);
+    public void RemoveRange(IEnumerable<TEntity> entities) => Db.RemoveRange(entities);
 
     protected virtual IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
     {
