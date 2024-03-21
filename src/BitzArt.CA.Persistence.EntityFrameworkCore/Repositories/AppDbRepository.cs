@@ -20,10 +20,10 @@ public abstract class AppDbRepository(AppDbContext db) : IRepository
 public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IRepository<TEntity>
     where TEntity : class
 {
-    public void Add(TEntity entity) => Db.Add(entity);
-    public void AddRange(IEnumerable<TEntity> entities) => Db.AddRange(entities);
-    public void Remove(TEntity entity) => Db.Remove(entity);
-    public void RemoveRange(IEnumerable<TEntity> entities) => Db.RemoveRange(entities);
+    public virtual void Add(TEntity entity) => Db.Add(entity);
+    public virtual void AddRange(IEnumerable<TEntity> entities) => Db.AddRange(entities);
+    public virtual void Remove(TEntity entity) => Db.Remove(entity);
+    public virtual void RemoveRange(IEnumerable<TEntity> entities) => Db.RemoveRange(entities);
 
     protected virtual IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
     {
@@ -31,6 +31,12 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
         if (filter is not null) result = result.Apply(filter);
 
         return result;
+    }
+
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .ToListAsync(cancellationToken);
     }
 
     public virtual async Task<TEntity?> GetAsync(IFilterSet<TEntity> filter, CancellationToken cancellationToken = default)

@@ -18,4 +18,5 @@ public interface IRepository<TEntity> : IRepository
     public Task<int> CountAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default);
     public Task<bool> AnyAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default);
     public Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<TEntity>> GetAllAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default);
 }
