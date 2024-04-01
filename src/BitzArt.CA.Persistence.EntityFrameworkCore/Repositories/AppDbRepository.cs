@@ -25,6 +25,11 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     public virtual void Remove(TEntity entity) => Db.Remove(entity);
     public virtual void RemoveRange(IEnumerable<TEntity> entities) => Db.RemoveRange(entities);
 
+    protected virtual IQueryable<TResult> Set<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter)
+    {
+        return filter(Db.Set<TEntity>());
+    }
+
     protected virtual IQueryable<TEntity> Set(IFilterSet<TEntity>? filter = null)
     {
         var result = Db.Set<TEntity>() as IQueryable<TEntity>;
@@ -39,7 +44,31 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
             .ToListAsync(cancellationToken);
     }
 
+    public virtual async Task<IEnumerable<TResult>> GetAllAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .ToListAsync(cancellationToken);
+    }
+
+    public virtual async Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .ToPageAsync(pageRequest, cancellationToken);
+    }
+
+    public virtual async Task<PageResult<TResult>> GetPageAsync<TResult>(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .ToPageAsync(pageRequest, cancellationToken);
+    }
+
     public virtual async Task<TEntity?> GetAsync(IFilterSet<TEntity> filter, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public virtual async Task<TResult?> GetAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
         return await Set(filter)
             .FirstOrDefaultAsync(cancellationToken);
@@ -51,16 +80,34 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
             .CountAsync(cancellationToken);
     }
 
+    public virtual async Task<int> CountAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .CountAsync(cancellationToken);
+    }
+
+    public virtual async Task<long> LongCountAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .LongCountAsync(cancellationToken);
+    }
+
+    public virtual async Task<long> LongCountAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
+    {
+        return await Set(filter)
+            .LongCountAsync(cancellationToken);
+    }
+
     public virtual async Task<bool> AnyAsync(IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
     {
         return await Set(filter)
             .AnyAsync(cancellationToken);
     }
 
-    public virtual async Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, IFilterSet<TEntity>? filter = null, CancellationToken cancellationToken = default)
+    public virtual async Task<bool> AnyAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
         return await Set(filter)
-            .ToPageAsync(pageRequest, cancellationToken);
+            .AnyAsync(cancellationToken);
     }
 }
 
