@@ -8,7 +8,7 @@
 
 		<PackageId>BitzArt.CA.Infrastructure.AspNetCore</PackageId>
 		<Authors>BitzArt</Authors>
-		<Description>Clean Architecture boilerplate. Infrastructure library for Asp.Net Core</Description>
+		<Description>Clean Architecture boilerplate. Infrastructure package for Asp.Net Core</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/BitzArt/CA-Boilerplate</RepositoryUrl>
@@ -20,8 +20,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Azureblue.ApplicationInsights.RequestLogging" Version="2.2.0" />
-		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
+		<PackageReference Include="BitzArt.ApiExceptions.AspNetCore" Version="1.22.0" />
 	</ItemGroup>
 
 	<ItemGroup>
