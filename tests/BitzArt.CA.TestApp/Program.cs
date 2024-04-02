@@ -16,11 +16,9 @@ public class Program
         });
         builder.Services.ConfigureDefaultHttpJsonOptions();
         builder.Services.AddControllers().AddDefaultJsonOptions();
-        builder.Services.AddApplicationInsights(builder.Configuration);
 
         var app = builder.Build();
 
-        app.UseHttpBodyLogging();
         app.UseApiExceptionHandler();
         app.MapControllers();
 
