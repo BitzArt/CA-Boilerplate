@@ -20,7 +20,7 @@
 		<PackageReference Include="BitzArt.EnumToMemberValue" Version="1.0.0" />
 		<PackageReference Include="BitzArt.Pagination" Version="1.14.0" />
 		<PackageReference Include="BitzArt.Patcher" Version="1.0.0" />
-		<PackageReference Include="BitzArt.LinqExtensions" Version="1.5.1" />
+		<PackageReference Include="BitzArt.LinqExtensions" Version="1.5.2" />
 	</ItemGroup>
 
 </Project>
