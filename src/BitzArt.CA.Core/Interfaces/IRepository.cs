@@ -4,7 +4,9 @@ namespace BitzArt.CA;
 
 public interface IRepository
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    public object Provider { get; }
+
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
 public interface IRepository<TEntity> : IRepository

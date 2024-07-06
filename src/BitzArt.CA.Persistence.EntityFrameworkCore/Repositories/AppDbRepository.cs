@@ -15,6 +15,8 @@ public abstract class AppDbRepository(AppDbContext db) : IRepository
 
         return await Db.SaveChangesAsync(cancellationToken);
     }
+
+    public object Provider => Db;
 }
 
 public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IRepository<TEntity>
