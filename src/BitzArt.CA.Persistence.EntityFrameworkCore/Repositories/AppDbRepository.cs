@@ -65,6 +65,26 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
             .ToListAsync(cancellationToken);
     }
 
+    public virtual async Task<Dictionary<TKey, TEntity>> GetMapAsync<TKey>(Func<TEntity, TKey> keySelector, CancellationToken cancellationToken = default)
+        where TKey : notnull
+    {
+        using var saveActivity = Activity.Current?.Source
+            .StartActivity($"{RepositoryName}: GetMap");
+
+        return await Set()
+            .ToDictionaryAsync(keySelector, cancellationToken);
+    }
+
+    public virtual async Task<Dictionary<TKey, TResult>> GetMapAsync<TResult, TKey>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, Func<TResult, TKey> keySelector, CancellationToken cancellationToken = default)
+        where TKey : notnull
+    {
+        using var saveActivity = Activity.Current?.Source
+            .StartActivity($"{RepositoryName}: GetMap");
+
+        return await Set(filter)
+            .ToDictionaryAsync(keySelector, cancellationToken);
+    }
+
     public virtual async Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, CancellationToken cancellationToken = default)
     {
         using var saveActivity = Activity.Current?.Source
