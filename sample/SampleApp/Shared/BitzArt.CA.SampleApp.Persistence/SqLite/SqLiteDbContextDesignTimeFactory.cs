@@ -9,7 +9,7 @@ public class SqLiteDbContextDesignTimeFactory : IDesignTimeDbContextFactory<SqLi
     public SqLiteDbContext CreateDbContext(string[] args)
     {
         var builder = new DbContextOptionsBuilder<SqLiteDbContext>();
-        var sqliteConnection = new SqliteConnection("Data Source=Sample.db");
+        var sqliteConnection = new SqliteConnection("Data Source=../../../Sample.db");
         sqliteConnection.Open();
 
         builder.UseSqlite(sqliteConnection);

@@ -11,7 +11,7 @@ public static class AddSqLiteDbContextExtension
     {
         services.AddRelationalAppDbContext<SqLiteDbContext>(options =>
         {
-            var sqliteConnection = new SqliteConnection("Data Source=Sample.db");
+            var sqliteConnection = new SqliteConnection("Data Source=../../Sample.db");
             sqliteConnection.Open();
 
             options.UseSqlite(sqliteConnection,
