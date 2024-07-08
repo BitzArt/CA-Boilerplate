@@ -1,0 +1,15 @@
+@baseUrl=http://localhost:5117
+
+GET {{baseUrl}}/books
+
+###
+
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+    "title": "Sample Book",
+    "author": "Sample Author"
+}
+
+###
