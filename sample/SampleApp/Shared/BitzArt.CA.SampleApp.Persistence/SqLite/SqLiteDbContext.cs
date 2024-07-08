@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BitzArt.CA.SampleApp.Persistence;
 
-public class SqLiteDbContext(DbContextOptions<SqLiteDbContext> options) 
+public class SqLiteDbContext(DbContextOptions<SqLiteDbContext> options)
     : RelationalAppDbContext<IDatabaseConfigurationPointer>(options)
 {
 }

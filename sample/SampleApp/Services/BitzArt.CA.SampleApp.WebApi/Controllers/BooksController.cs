@@ -17,7 +17,6 @@ public class BooksController(IBookRepository bookRepository) : ControllerBase
     public async Task<IActionResult> GetAsync([FromRoute] int id)
     {
         var book = await bookRepository.GetAsync(chats => chats.Where(x => x.Id == id));
-
         if (book is null) throw new Exception($"Book with ID {id} was not found.");
 
         return Ok(book);
@@ -32,11 +31,24 @@ public class BooksController(IBookRepository bookRepository) : ControllerBase
         return Ok(book);
     }
 
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] Book request)
+    {
+        var book = await bookRepository.GetAsync(chats => chats.Where(x => x.Id == id));
+        if (book is null) throw new Exception($"Book with ID {id} was not found.");
+
+        book.Title = request.Title;
+        book.Author = request.Author;
+
+        await bookRepository.SaveChangesAsync();
+
+        return Ok(book);
+    }
+
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
         var book = await bookRepository.GetAsync(chats => chats.Where(x => x.Id == id));
-
         if (book is null) throw new Exception($"Book with ID {id} was not found.");
 
         bookRepository.Remove(book);

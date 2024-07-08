@@ -1,6 +1,11 @@
 @baseUrl=http://localhost:5117
+@bookId=1
 
 GET {{baseUrl}}/books
+
+###
+
+GET {{baseUrl}}/books/{{bookId}}
 
 ###
 
@@ -11,3 +16,17 @@ Content-Type: application/json
     "title": "Sample Book",
     "author": "Sample Author"
 }
+
+###
+
+PUT {{baseUrl}}/books/{{bookId}}
+Content-Type: application/json
+
+{
+    "title": "Updated Book",
+    "author": "Updated Author"
+}
+
+###
+
+DELETE {{baseUrl}}/books/{{bookId}}
