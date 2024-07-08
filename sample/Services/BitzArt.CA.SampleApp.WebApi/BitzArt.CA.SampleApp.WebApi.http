@@ -1,6 +1,0 @@
-@BitzArt.CA.SampleApp.WebApi_HostAddress = http://localhost:5117
-
-GET {{BitzArt.CA.SampleApp.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
