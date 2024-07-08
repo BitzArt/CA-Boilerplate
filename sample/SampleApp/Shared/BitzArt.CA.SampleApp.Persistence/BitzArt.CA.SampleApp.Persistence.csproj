@@ -16,8 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\src\BitzArt.CA.Persistence.EntityFrameworkCore.Relational\BitzArt.CA.Persistence.EntityFrameworkCore.Relational.csproj" />
-		<ProjectReference Include="..\BitzArt.CA.SampleApp.Core\BitzArt.CA.SampleApp.Core.csproj" />
+	  <ProjectReference Include="..\..\..\..\src\BitzArt.CA.Persistence.EntityFrameworkCore.Relational\BitzArt.CA.Persistence.EntityFrameworkCore.Relational.csproj" />
+	  <ProjectReference Include="..\BitzArt.CA.SampleApp.Core\BitzArt.CA.SampleApp.Core.csproj" />
 	</ItemGroup>
 
 </Project>

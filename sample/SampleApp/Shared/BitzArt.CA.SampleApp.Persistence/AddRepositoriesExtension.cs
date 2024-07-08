@@ -1,6 +1,5 @@
 using BitzArt.CA.SampleApp.Core;
 using Microsoft.Extensions.DependencyInjection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BitzArt.CA.SampleApp.Persistence;
 
