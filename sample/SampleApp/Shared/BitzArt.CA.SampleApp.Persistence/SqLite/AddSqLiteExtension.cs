@@ -7,11 +7,11 @@ namespace BitzArt.CA.SampleApp.Persistence;
 
 public static class AddSqLiteDbContextExtension
 {
-    public static void AddSqLiteDbContext(this IServiceCollection services)
+    public static void AddSqLite(this IServiceCollection services, string? connectionString)
     {
         services.AddRelationalAppDbContext<SqLiteDbContext>(options =>
         {
-            var sqliteConnection = new SqliteConnection("Data Source=../../Sample.db");
+            var sqliteConnection = new SqliteConnection(connectionString);
             sqliteConnection.Open();
 
             options.UseSqlite(sqliteConnection,

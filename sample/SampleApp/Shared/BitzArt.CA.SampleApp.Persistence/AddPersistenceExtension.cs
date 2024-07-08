@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BitzArt.CA.Persistence;
 
 namespace BitzArt.CA.SampleApp.Persistence;
 
@@ -7,13 +9,14 @@ public static class AddPersistenceExtension
 {
     public static IHostApplicationBuilder AddPersistence(this IHostApplicationBuilder builder)
     {
-        builder.Services.AddPersistence();
+        builder.Services.AddPersistence(builder.Configuration);
         return builder;
     }
 
-    public static void AddPersistence(this IServiceCollection services)
+    public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSqLiteDbContext();
+        var settings = services.AddPersistenceSettings(configuration);
+        services.AddSqLite(settings.ConnectionString);
         services.AddRepositories();
     }
 }
