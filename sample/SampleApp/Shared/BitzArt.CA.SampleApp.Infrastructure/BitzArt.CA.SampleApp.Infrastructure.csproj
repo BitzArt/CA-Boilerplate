@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>BitzArt.CA.SampleApp.Infrastructure</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\src\BitzArt.CA.Infrastructure.AspNetCore\BitzArt.CA.Infrastructure.AspNetCore.csproj" />
+		<ProjectReference Include="..\BitzArt.CA.SampleApp.Core\BitzArt.CA.SampleApp.Core.csproj" />
+	</ItemGroup>
+
+</Project>

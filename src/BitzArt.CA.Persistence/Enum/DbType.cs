@@ -15,6 +15,9 @@ public enum DbType : byte
     [EnumMember(Value = "mysql")]
     Mysql = 3,
 
+    [EnumMember(Value = "sqlite")]
+    SqLite = 4,
+
     [EnumMember(Value = "cosmosdb")]
     CosmosDb = 101,
 

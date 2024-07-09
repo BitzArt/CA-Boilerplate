@@ -8,10 +8,11 @@ public abstract class AppDbRepository(AppDbContext db) : IRepository
 {
     protected readonly AppDbContext Db = db;
 
+    protected static ActivitySource ActivitySource = new("BitzArt.CA.Persistence.EntityFrameworkCore");
+
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"{GetType().Name}: SaveChanges");
+        using var saveActivity = ActivitySource.StartActivity($"{GetType().Name}: SaveChanges");
 
         return await Db.SaveChangesAsync(cancellationToken);
     }
@@ -28,8 +29,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"{RepositoryName}: SaveChanges");
+        using var saveActivity = ActivitySource?.StartActivity($"{RepositoryName}: SaveChanges");
 
         return await Db.SaveChangesAsync(cancellationToken);
     }
@@ -51,8 +51,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"GetAll<{typeof(TEntity).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"GetAll<{typeof(TEntity).Name}>");
 
         return await Set()
             .ToListAsync(cancellationToken);
@@ -60,8 +59,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<IEnumerable<TResult>> GetAllAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"GetAll<{typeof(TResult).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"GetAll<{typeof(TResult).Name}>");
 
         return await Set(filter)
             .ToListAsync(cancellationToken);
@@ -70,8 +68,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     public virtual async Task<Dictionary<TKey, TEntity>> GetMapAsync<TKey>(Func<TEntity, TKey> keySelector, CancellationToken cancellationToken = default)
         where TKey : notnull
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"GetMap<{typeof(TEntity).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"GetMap<{typeof(TEntity).Name}>");
 
         return await Set()
             .ToDictionaryAsync(keySelector, cancellationToken);
@@ -80,8 +77,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     public virtual async Task<Dictionary<TKey, TResult>> GetMapAsync<TResult, TKey>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, Func<TResult, TKey> keySelector, CancellationToken cancellationToken = default)
         where TKey : notnull
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"GetMap<{typeof(TResult).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"GetMap<{typeof(TResult).Name}>");
 
         return await Set(filter)
             .ToDictionaryAsync(keySelector, cancellationToken);
@@ -89,8 +85,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<PageResult<TEntity>> GetPageAsync(PageRequest pageRequest, CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"GetPage<{typeof(TEntity).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"GetPage<{typeof(TEntity).Name}>");
 
         return await Set()
             .ToPageAsync(pageRequest, cancellationToken);
@@ -98,8 +93,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<PageResult<TResult>> GetPageAsync<TResult>(PageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"GetPage<{typeof(TResult).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"GetPage<{typeof(TResult).Name}>");
 
         return await Set(filter)
             .ToPageAsync(pageRequest, cancellationToken);
@@ -107,8 +101,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<TEntity?> GetAsync(CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"Get<{typeof(TEntity).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TEntity).Name}>");
 
         return await Set()
             .FirstOrDefaultAsync(cancellationToken);
@@ -116,8 +109,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<TResult?> GetAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"Get<{typeof(TResult).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TResult).Name}>");
 
         return await Set(filter)
             .FirstOrDefaultAsync(cancellationToken);
@@ -125,8 +117,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"Count<{typeof(TEntity).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"Count<{typeof(TEntity).Name}>");
 
         return await Set()
             .CountAsync(cancellationToken);
@@ -134,8 +125,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<int> CountAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"Count<{typeof(TResult).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"Count<{typeof(TResult).Name}>");
 
         return await Set(filter)
             .CountAsync(cancellationToken);
@@ -143,8 +133,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<long> LongCountAsync(CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"LongCount<{typeof(TEntity).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"LongCount<{typeof(TEntity).Name}>");
 
         return await Set()
             .LongCountAsync(cancellationToken);
@@ -152,8 +141,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<long> LongCountAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"LongCount<{typeof(TResult).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"LongCount<{typeof(TResult).Name}>");
 
         return await Set(filter)
             .LongCountAsync(cancellationToken);
@@ -161,8 +149,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"Any<{typeof(TEntity).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"Any<{typeof(TEntity).Name}>");
 
         return await Set()
             .AnyAsync(cancellationToken);
@@ -170,8 +157,7 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
     public virtual async Task<bool> AnyAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
-        using var saveActivity = Activity.Current?.Source
-            .StartActivity($"Any<{typeof(TResult).Name}>");
+        using var saveActivity = ActivitySource?.StartActivity($"Any<{typeof(TResult).Name}>");
 
         return await Set(filter)
             .AnyAsync(cancellationToken);
