@@ -6,7 +6,7 @@ namespace BitzArt.CA.SampleApp;
 [Route("time")]
 public class TimeController(ITimeService timeService) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("current")]
     public IActionResult GetCurrentTime()
     {
         var currentTime = timeService.GetCurrentTime();
