@@ -4,16 +4,11 @@ using System.Diagnostics;
 
 namespace BitzArt.CA.Persistence;
 
-public abstract class AppDbRepository : IRepository
+public abstract class AppDbRepository(AppDbContext db) : IRepository
 {
-    protected readonly AppDbContext Db;
+    protected readonly AppDbContext Db = db;
 
     protected static ActivitySource ActivitySource = new("BitzArt.CA.Persistence.EntityFrameworkCore");
-
-    protected AppDbRepository(AppDbContext db)
-    {
-        Db = db;
-    }
 
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
