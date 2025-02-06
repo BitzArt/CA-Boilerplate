@@ -1,6 +1,7 @@
 ﻿using BitzArt.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace BitzArt.CA.Persistence;
 
@@ -161,6 +162,38 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
 
         return await Set(filter)
             .AnyAsync(cancellationToken);
+    }
+
+    public virtual async Task<long> SumAsync(Expression<Func<TEntity, long>> selector, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Sum<{typeof(TEntity).Name}>");
+
+        return await Set()
+            .SumAsync(selector, cancellationToken);
+    }
+
+    public virtual async Task<long> SumAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, Expression<Func<TResult, long>> selector, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Sum<{typeof(TResult).Name}>");
+
+        return await Set(filter)
+            .SumAsync(selector, cancellationToken);
+    }
+
+    public virtual async Task<int> SumAsync(Expression<Func<TEntity, int>> selector, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Sum<{typeof(TEntity).Name}>");
+
+        return await Set()
+            .SumAsync(selector, cancellationToken);
+    }
+
+    public virtual async Task<int> SumAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, Expression<Func<TResult, int>> selector, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Sum<{typeof(TResult).Name}>");
+
+        return await Set(filter)
+            .SumAsync(selector, cancellationToken);
     }
 }
 
