@@ -50,12 +50,4 @@ public interface IRepository<TEntity> : IRepository
     public Task<bool> AnyAsync(CancellationToken cancellationToken = default);
 
     public Task<bool> AnyAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default);
-    
-    public Task<int> SumAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, Expression<Func<TResult, int>> selector, CancellationToken cancellationToken = default);
-    
-    public Task<int> SumAsync(Expression<Func<TEntity, int>> selector, CancellationToken cancellationToken = default);
-    
-    public Task<long> SumAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, Expression<Func<TResult, long>> selector, CancellationToken cancellationToken = default);
-    
-    public Task<long> SumAsync(Expression<Func<TEntity, long>> selector, CancellationToken cancellationToken = default);
 }
