@@ -9,7 +9,7 @@ public abstract class AppDbRepository(AppDbContext db) : IRepository
 {
     protected readonly AppDbContext Db = db;
 
-    protected static ActivitySource ActivitySource = new("BitzArt.CA.Persistence.EntityFrameworkCore");
+    private protected static ActivitySource ActivitySource = new("BitzArt.CA.Persistence.EntityFrameworkCore");
 
     public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

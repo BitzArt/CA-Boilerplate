@@ -52,6 +52,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BitzArt.CA.SampleApp.Persis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitzArt.CA.SampleApp.Infrastructure", "sample\SampleApp\Shared\BitzArt.CA.SampleApp.Infrastructure\BitzArt.CA.SampleApp.Infrastructure.csproj", "{A4655B40-F649-4E50-82EE-E5E975D5FDEF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sln", "sln", "{19D20A62-6A38-4A02-8C7C-42B03875B68C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
