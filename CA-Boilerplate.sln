@@ -24,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C76EE6F4-8B4B-43A8-9B72-F1AFA0B28AAB}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\Publish CA-boilerplate.yml = .github\workflows\Publish CA-boilerplate.yml
+		.github\workflows\Tests.yml = .github\workflows\Tests.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{360C9856-19B3-47BA-8DB8-390BDD6BE88A}"
