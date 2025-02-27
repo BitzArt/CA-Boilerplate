@@ -17,10 +17,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="BitzArt.ApiExceptions" Version="1.22.0" />
-		<PackageReference Include="BitzArt.EnumToMemberValue" Version="1.0.0" />
+		<PackageReference Include="BitzArt.EnumToMemberValue" Version="1.1.0" />
 		<PackageReference Include="BitzArt.Pagination" Version="1.16.1" />
-		<PackageReference Include="BitzArt.Patcher" Version="1.0.0" />
-		<PackageReference Include="BitzArt.LinqExtensions" Version="1.7.0" />
+		<PackageReference Include="BitzArt.Patcher" Version="1.1.0" />
+		<PackageReference Include="BitzArt.LinqExtensions" Version="1.8.0" />
 	</ItemGroup>
 
 </Project>
