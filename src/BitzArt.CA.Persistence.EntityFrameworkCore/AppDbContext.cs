@@ -24,13 +24,16 @@ public abstract class AppDbContext : DbContext
             .Where(x => x.State == EntityState.Added)
             .Select(x => x.Entity);
 
+        DateTimeOffset? now = null;
+
         foreach (var entry in insertedEntries)
         {
             if (entry is not ICreatedAt simpleAuditable) continue;
-            simpleAuditable.CreatedAt = DateTimeOffset.UtcNow;
+            now ??= DateTimeOffset.UtcNow;
+            simpleAuditable.CreatedAt = now;
 
             if (entry is not IAuditable auditable) continue;
-            auditable.LastUpdatedAt = DateTimeOffset.UtcNow;
+            auditable.LastUpdatedAt = now;
         }
 
         var updatedEntries = ChangeTracker.Entries()
@@ -40,7 +43,7 @@ public abstract class AppDbContext : DbContext
         foreach (var entry in updatedEntries)
         {
             if (entry is not IAuditable auditable) continue;
-            auditable.LastUpdatedAt = DateTimeOffset.UtcNow;
+            auditable.LastUpdatedAt = now;
         }
     }
 }
