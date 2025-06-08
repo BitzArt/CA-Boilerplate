@@ -4,8 +4,5 @@ namespace BitzArt.CA.SampleApp.Infrastructure;
 
 internal class TimeService : ITimeService
 {
-    public DateTime GetCurrentTime()
-    {
-        return DateTime.Now;
-    }
+    public DateTime GetCurrentTime() => DateTime.Now;
 }

@@ -1,7 +1,13 @@
 ﻿namespace BitzArt;
 
+/// <summary>
+/// An object defined primarily by its identity.
+/// </summary>
+/// <typeparam name="TKey"></typeparam>
 public interface IEntity<TKey>
-    where TKey : struct
 {
-    public TKey? Id { get; set; }
+    /// <summary>
+    /// Entity unique identifier.
+    /// </summary>
+    public TKey Id { get; set; }
 }

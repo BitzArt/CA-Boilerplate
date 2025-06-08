@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RootNamespace>BitzArt.CA.Persistence</RootNamespace>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 		<PackageId>BitzArt.CA.Persistence.EntityFrameworkCore</PackageId>
 		<Authors>BitzArt</Authors>
@@ -16,7 +17,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BitzArt.Pagination.EntityFrameworkCore" Version="1.16.1" />
+		<PackageReference Include="BitzArt.Pagination.EntityFrameworkCore" Version="1.19.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">

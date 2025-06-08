@@ -3,17 +3,12 @@ using Microsoft.Extensions.Logging;
 
 namespace BitzArt.CA.Persistence;
 
-public class AppDbInitializingService<TContext> : IAppDbInitializingService
+internal class AppDbInitializingService<TContext>(TContext db, ILogger<AppDbInitializingService<TContext>> logger)
+    : IAppDbInitializingService
     where TContext : DbContext
 {
-    protected readonly TContext _db;
-    protected readonly ILogger Logger;
-
-    public AppDbInitializingService(TContext db, ILogger<AppDbInitializingService<TContext>> logger)
-    {
-        _db = db;
-        Logger = logger;
-    }
+    protected readonly TContext _db = db;
+    protected readonly ILogger Logger = logger;
 
     public virtual async Task InitializeAsync(CancellationToken ct = default)
     {

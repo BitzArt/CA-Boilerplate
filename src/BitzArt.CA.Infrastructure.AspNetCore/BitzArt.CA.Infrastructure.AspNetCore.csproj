@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RootNamespace>BitzArt.CA</RootNamespace>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 		<PackageId>BitzArt.CA.Infrastructure.AspNetCore</PackageId>
 		<Authors>BitzArt</Authors>

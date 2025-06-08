@@ -3,13 +3,10 @@ using Microsoft.Extensions.Logging;
 
 namespace BitzArt.CA.Persistence;
 
-public class DebugAppDbInitializingService<TContext> : AppDbInitializingService<TContext>
+internal class DebugAppDbInitializingService<TContext>(TContext db, ILogger<AppDbInitializingService<TContext>> logger)
+    : AppDbInitializingService<TContext>(db, logger)
     where TContext : DbContext
 {
-    public DebugAppDbInitializingService(TContext db, ILogger<AppDbInitializingService<TContext>> logger)
-        : base(db, logger) { }
-
-
     public override async Task InitializeAsync(CancellationToken ct = default)
     {
         Logger.LogWarning("Database debug operations are allowed.");

@@ -2,16 +2,19 @@
 
 namespace BitzArt.CA.Persistence;
 
-public abstract class AppDbContext : DbContext
+/// <summary>
+/// Application-wide <see cref="DbContext"/>.
+/// </summary>
+public abstract class AppDbContext(DbContextOptions options) : DbContext(options)
 {
-    protected AppDbContext(DbContextOptions options) : base(options) { }
-
+    /// <inheritdoc/>
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
         UpdateAuditable();
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
+    /// <inheritdoc/>
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
         UpdateAuditable();

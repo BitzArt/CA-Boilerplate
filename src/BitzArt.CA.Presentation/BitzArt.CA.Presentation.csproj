@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<RootNamespace>BitzArt.CA</RootNamespace>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 		<PackageId>BitzArt.CA.Presentation</PackageId>
 		<Authors>BitzArt</Authors>
@@ -16,8 +17,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BitzArt.FluentValidation.Extensions" Version="1.5.0" />
-		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BitzArt.FluentValidation.Extensions" Version="1.5.2" />
 		<PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
 	</ItemGroup>
 
