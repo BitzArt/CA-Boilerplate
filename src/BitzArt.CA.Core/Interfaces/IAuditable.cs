@@ -11,7 +11,7 @@
 public interface IAuditable : ICreatedAt
 {
     /// <summary>
-    /// An object that has it's last update timestamp.
+    /// This object's last update timestamp.
     /// </summary>
     public DateTimeOffset? LastUpdatedAt { get; set; }
 }
