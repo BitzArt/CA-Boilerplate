@@ -27,12 +27,11 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
             .Where(x => x.State == EntityState.Added)
             .Select(x => x.Entity);
 
-        DateTimeOffset? now = null;
+        DateTimeOffset now = DateTimeOffset.UtcNow;
 
         foreach (var entry in insertedEntries)
         {
             if (entry is not ICreatedAt simpleAuditable) continue;
-            now ??= DateTimeOffset.UtcNow;
             simpleAuditable.CreatedAt = now;
 
             if (entry is not IAuditable auditable) continue;
