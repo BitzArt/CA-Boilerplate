@@ -7,7 +7,7 @@ namespace BitzArt.CA.SampleApp;
 public class BooksController(IBookRepository bookRepository) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAllAsync([FromQuery(Name = "property")] string property)
+    public async Task<IActionResult> GetAllAsync([FromQuery(Name = "property")] string? property)
     {
         var result = await bookRepository.GetAllAsync(q =>
         {
