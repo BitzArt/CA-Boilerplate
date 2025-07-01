@@ -8,8 +8,8 @@ public class TestController(ILogger<TestController> logger) : ControllerBase
     [HttpGet]
     public IActionResult TestGet()
     {
-        /*logger.LogInformation("TestGet");
-        return Ok("OK");*/
+        logger.LogInformation("TestGet");
+        return Ok("OK");
     }
 
     [HttpPost]
