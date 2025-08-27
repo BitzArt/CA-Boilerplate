@@ -61,23 +61,21 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     /// <inheritdoc/>
     public virtual void RemoveRange(IEnumerable<TEntity> entities) => Db.RemoveRange(entities);
 
-    /// <inheritdoc cref="Set{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}})"/>
-    protected virtual IQueryable<TEntity> Set() => Db.Set<TEntity>();
-
-    /// <summary>
-    /// Returns a queryable set of entities of type <typeparamref name="TEntity"/> with optional filtering.
-    /// </summary>
-    /// <typeparam name="TResult">Result type of the query.</typeparam>
-    /// <param name="filter">Filter function to apply to the queryable set.</param>
-    /// <returns>An <see cref="IQueryable{TResult}"/> representing the filtered set of entities.</returns>
-    protected virtual IQueryable<TResult> Set<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter) => filter.Invoke(Set());
-
     /// <inheritdoc/>
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         using var saveActivity = ActivitySource?.StartActivity($"GetAll<{typeof(TEntity).Name}>");
 
         return await Set()
+            .ToListAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<IEnumerable<object>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"GetAll<?>");
+
+        return await Set(filter)
             .ToListAsync(cancellationToken);
     }
 
@@ -121,6 +119,16 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     }
 
     /// <inheritdoc/>
+    public virtual async Task<PageResult<object, TPageRequest>> GetPageAsync<TPageRequest>(TPageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default)
+        where TPageRequest : IPageRequest
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"GetPage<?>");
+
+        return await Set(filter)
+            .ToPageAsync(pageRequest, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public virtual async Task<PageResult<TResult, TPageRequest>> GetPageAsync<TPageRequest, TResult>(TPageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
         where TPageRequest : IPageRequest
     {
@@ -158,6 +166,15 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     }
 
     /// <inheritdoc/>
+    public virtual async Task<object> FirstAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Get<?>");
+
+        return await Set(filter)
+            .FirstAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public virtual async Task<TResult> FirstAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
         using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TResult).Name}>");
@@ -172,6 +189,15 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
         using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TEntity).Name}>");
 
         return await Set()
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<object?> FirstOrDefaultAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Get<?>");
+
+        return await Set(filter)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
@@ -194,6 +220,15 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
     }
 
     /// <inheritdoc/>
+    public virtual async Task<object> SingleAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TEntity).Name}>");
+
+        return await Set(filter)
+            .SingleAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public virtual async Task<TResult> SingleAsync<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter, CancellationToken cancellationToken = default)
     {
         using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TResult).Name}>");
@@ -208,6 +243,15 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
         using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TEntity).Name}>");
 
         return await Set()
+            .SingleOrDefaultAsync(cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public virtual async Task<object?> SingleOrDefaultAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default)
+    {
+        using var saveActivity = ActivitySource?.StartActivity($"Get<{typeof(TEntity).Name}>");
+
+        return await Set(filter)
             .SingleOrDefaultAsync(cancellationToken);
     }
 
@@ -273,6 +317,20 @@ public class AppDbRepository<TEntity>(AppDbContext db) : AppDbRepository(db), IR
         return await Set(filter)
             .AnyAsync(cancellationToken);
     }
+
+    /// <inheritdoc cref="Set{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}})"/>
+    protected virtual IQueryable<TEntity> Set() => Db.Set<TEntity>();
+
+    /// <inheritdoc cref="Set{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}})"/>
+    protected virtual IQueryable<object> Set(Func<IQueryable<TEntity>, IQueryable> filter) => filter.Invoke(Set()).Cast<object>();
+
+    /// <summary>
+    /// Returns a queryable set of entities of type <typeparamref name="TEntity"/> with optional filtering.
+    /// </summary>
+    /// <typeparam name="TResult">Result type of the query.</typeparam>
+    /// <param name="filter">Filter function to apply to the queryable set.</param>
+    /// <returns>An <see cref="IQueryable{TResult}"/> representing the filtered set of entities.</returns>
+    protected virtual IQueryable<TResult> Set<TResult>(Func<IQueryable<TEntity>, IQueryable<TResult>> filter) => filter.Invoke(Set());
 }
 
 /// <summary>

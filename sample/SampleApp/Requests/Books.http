@@ -1,7 +1,11 @@
 @baseUrl=http://localhost:5117
 @bookId=1
 
-GET {{baseUrl}}/books
+GET {{baseUrl}}/books?property
+
+###
+
+GET {{baseUrl}}/books?property=title
 
 ###
 

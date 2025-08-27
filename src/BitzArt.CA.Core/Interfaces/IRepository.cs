@@ -54,6 +54,9 @@ public interface IRepository<TEntity> : IRepository
     /// <inheritdoc cref="GetAllAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
     public Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
 
+    /// <inheritdoc cref="GetAllAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
+    public Task<IEnumerable<object>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Retrieves all records of type <typeparamref name="TEntity"/> from the repository.
     /// </summary>
@@ -81,6 +84,10 @@ public interface IRepository<TEntity> : IRepository
 
     /// <inheritdoc cref="GetPageAsync{TPageRequest, TResult}(TPageRequest, Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
     public Task<PageResult<TEntity, TPageRequest>> GetPageAsync<TPageRequest>(TPageRequest pageRequest, CancellationToken cancellationToken = default)
+        where TPageRequest : IPageRequest;
+
+    /// <inheritdoc cref="GetPageAsync{TPageRequest, TResult}(TPageRequest, Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
+    public Task<PageResult<object, TPageRequest>> GetPageAsync<TPageRequest>(TPageRequest pageRequest, Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default)
         where TPageRequest : IPageRequest;
 
     /// <summary>
@@ -114,6 +121,9 @@ public interface IRepository<TEntity> : IRepository
     /// <inheritdoc cref="FirstAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
     public Task<TEntity> FirstAsync(CancellationToken cancellationToken = default);
 
+    /// <inheritdoc cref="FirstAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
+    public Task<object> FirstAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// Retrieves the first matching record of type <typeparamref name="TResult"/> from the repository.
     /// </summary>
@@ -125,6 +135,9 @@ public interface IRepository<TEntity> : IRepository
 
     /// <inheritdoc cref="FirstOrDefaultAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
     public Task<TEntity?> FirstOrDefaultAsync(CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="FirstOrDefaultAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
+    public Task<object?> FirstOrDefaultAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves the first matching record of type <typeparamref name="TResult"/> from the repository,
@@ -138,6 +151,9 @@ public interface IRepository<TEntity> : IRepository
 
     /// <inheritdoc cref="SingleAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
     public Task<TEntity> SingleAsync(CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="SingleAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
+    public Task<object> SingleAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// <para>
@@ -155,6 +171,9 @@ public interface IRepository<TEntity> : IRepository
 
     /// <inheritdoc cref="SingleOrDefaultAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
     public Task<TEntity?> SingleOrDefaultAsync(CancellationToken cancellationToken = default);
+
+    /// <inheritdoc cref="SingleOrDefaultAsync{TResult}(Func{IQueryable{TEntity}, IQueryable{TResult}}, CancellationToken)"/>
+    public Task<object?> SingleOrDefaultAsync(Func<IQueryable<TEntity>, IQueryable> filter, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// <para>
