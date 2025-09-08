@@ -63,7 +63,7 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
         {
             var entity = entry.Entity;
 
-            if (!entity.IsDeleted)
+            if (!entity.IsDeleted.HasValue || !entity.IsDeleted!.Value)
             {
                 entity.IsDeleted = true;
                 entity.DeletedAt = now;

@@ -14,7 +14,7 @@ public interface ISoftDeletable
     /// <summary>
     /// Indicates whether this object is marked as deleted.
     /// </summary>
-    public bool IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     /// <summary>
     /// The timestamp when this object was marked as deleted.
