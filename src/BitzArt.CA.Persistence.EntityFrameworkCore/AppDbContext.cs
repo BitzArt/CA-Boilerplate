@@ -10,6 +10,7 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
     /// <inheritdoc/>
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
+        HandleSoftDelete();
         UpdateAuditable();
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
@@ -17,6 +18,7 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
     /// <inheritdoc/>
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
+        HandleSoftDelete();
         UpdateAuditable();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
@@ -46,6 +48,32 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
         {
             if (entry is not IAuditable auditable) continue;
             auditable.LastUpdatedAt = now;
+        }
+    }
+
+    private void HandleSoftDelete()
+    {
+        var toSoftDelete = ChangeTracker
+            .Entries<ISoftDeletable>()
+            .Where(e => e.State == EntityState.Deleted);
+
+        DateTimeOffset now = DateTimeOffset.UtcNow;
+
+        foreach (var entry in toSoftDelete)
+        {
+            var entity = entry.Entity;
+
+            if (!entity.IsDeleted)
+            {
+                entity.IsDeleted = true;
+                entity.DeletedAt = now;
+            
+                entry.State = EntityState.Modified;
+            }
+            else
+            {
+                entry.State = EntityState.Unchanged;
+            }
         }
     }
 }
