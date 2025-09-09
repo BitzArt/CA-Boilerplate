@@ -42,7 +42,7 @@ public static class DeletableConfigurationExtensions
 
         builder.HasIndex(nameof(ISoftDeletable.IsDeleted));
 
-        builder.HasQueryFilter(e => e.IsDeleted != true);
+        builder.HasQueryFilter(e => e.IsDeleted!.Value == false);
     }
 
     private static void TryConfigureIsHardDeletedProperty<TEntity>(EntityTypeBuilder<TEntity> builder)

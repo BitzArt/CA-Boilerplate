@@ -90,6 +90,7 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
                 // or the value was set explicitly before calling SaveChanges.
 
                 // NOTE: We also do not update DeletionInfo in this case by design.
+                entry.State = EntityState.Unchanged;
                 continue;
             }
 
