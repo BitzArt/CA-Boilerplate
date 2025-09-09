@@ -10,26 +10,30 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
     /// <inheritdoc/>
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        HandleSoftDelete();
-        UpdateAuditable();
+        OnSaveChanges();
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
     /// <inheritdoc/>
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        HandleSoftDelete();
-        UpdateAuditable();
+        OnSaveChanges();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
-    private void UpdateAuditable()
+    private void OnSaveChanges()
+    {
+        var now = DateTimeOffset.UtcNow;
+
+        UpdateAuditable(now);
+        HandleSoftDelete(now);
+    }
+
+    private void UpdateAuditable(DateTimeOffset now)
     {
         var insertedEntries = ChangeTracker.Entries()
             .Where(x => x.State == EntityState.Added)
             .Select(x => x.Entity);
-
-        DateTimeOffset now = DateTimeOffset.UtcNow;
 
         foreach (var entry in insertedEntries)
         {
@@ -51,28 +55,40 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
         }
     }
 
-    private void HandleSoftDelete()
+    private void HandleSoftDelete(DateTimeOffset now)
     {
         var toSoftDelete = ChangeTracker
             .Entries<ISoftDeletable>()
             .Where(e => e.State == EntityState.Deleted);
 
-        DateTimeOffset now = DateTimeOffset.UtcNow;
-
         foreach (var entry in toSoftDelete)
         {
             var entity = entry.Entity;
 
-            if (!entity.IsDeleted.HasValue || !entity.IsDeleted!.Value)
+            if (entity is IHardDeletable hardDeletable && hardDeletable.IsHardDeleted)
             {
-                entity.IsDeleted = true;
-                entity.DeletedAt = now;
-            
-                entry.State = EntityState.Modified;
+                // Entity is marked for hard deletion,
+                // so let it be deleted from the database.
+                continue;
             }
-            else
+
+            entry.State = EntityState.Modified;
+
+            if (entity.IsDeleted == true)
             {
-                entry.State = EntityState.Unchanged;
+                // Already marked as deleted, no need to update again.
+                // e.g. if the entity was loaded from the database with IsDeleted = true,
+                // or the value was set explicitly before calling SaveChanges.
+
+                // NOTE: We also do not update DeletionInfo in this case by design.
+                continue;
+            }
+
+            entity.IsDeleted = true;
+            
+            if (entity is ISoftDeletable<DeletionInfo> entityWithDefaultDeletionInfo)
+            {
+                entityWithDefaultDeletionInfo.DeletionInfo = new(now);
             }
         }
     }
