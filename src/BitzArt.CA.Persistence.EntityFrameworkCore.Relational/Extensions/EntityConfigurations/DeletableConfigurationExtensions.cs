@@ -77,7 +77,10 @@ public static class DeletableConfigurationExtensions
 
         var entityType = builderType.GetGenericArguments()[0];
 
-        if (!entityType.IsGenericType || entityType.GetGenericTypeDefinition() != typeof(ISoftDeletable<>))
+        var softDeletableInterface = entityType.GetInterfaces()
+            .FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISoftDeletable<>));
+
+        if (softDeletableInterface == null)
         {
             // The entity does not implement ISoftDeletable<T>
             return;

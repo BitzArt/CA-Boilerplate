@@ -47,8 +47,8 @@ public static class SoftDeletableExtensions
             var implementingTypeName = $"{nameof(ISoftDeletable)}<{deletionInfoType!.Name}>";
 
             throw new InvalidOperationException($"The entity implements {implementingTypeName}. " +
-                $"Use {nameof(SoftDelete)}<{deletionInfoType.Name}>" +
-                $"({implementingTypeName} entity, {deletionInfoType.Name} deletionInfo) overload instead.");
+                $"Use {nameof(Restore)}<{deletionInfoType.Name}>" +
+                $"({implementingTypeName} entity) overload instead.");
         }
 
         entity.IsDeleted = false;

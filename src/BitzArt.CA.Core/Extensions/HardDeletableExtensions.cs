@@ -9,7 +9,7 @@ public static class HardDeletableExtensions
     /// Marks the entity implementing <see cref="IHardDeletable"/> as hard deleted.
     /// It will be permanently removed from the database during the next change save operation.
     /// </summary>
-    /// <param name="entity"></param>
+    /// <param name="entity">Entity to mark as hard deleted.</param>
     public static void HardDelete(this IHardDeletable entity)
     {
         entity.IsHardDeleted = true;

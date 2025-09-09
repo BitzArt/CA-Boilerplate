@@ -15,15 +15,18 @@ public static class SoftDeletableQueryExtensions
     /// </returns>
     public static IQueryable<T> ExceptDeleted<T>(this IQueryable<T> query) where T : ISoftDeletable
         => query.Where(x => x.IsDeleted != true);
-    
+
     /// <summary>
     /// Filters the query to include only entities that are marked as deleted.
     /// </summary>
+    /// <remarks>
+    /// <b>NOTE:</b> Make sure you also apply the <c>IgnoreQueryFilters()</c> extension method when querying via EF Core.
+    /// </remarks>
     /// <typeparam name="T">The entity type that implements <see cref="ISoftDeletable"/>.</typeparam>
     /// <param name="query">The queryable collection of entities.</param>
     /// <returns>
-    /// An <see cref="IQueryable{T}"/> containing only entities that are marked as deleted.
+    /// An <see cref="IQueryable{T}"/> containing only entities that are marked as soft deleted.
     /// </returns>
-    public static IQueryable<T> OnlyDeleted<T>(this IQueryable<T> query) where T : ISoftDeletable
+    public static IQueryable<T> DeletedOnly<T>(this IQueryable<T> query) where T : ISoftDeletable
         => query.Where(x => x.IsDeleted == true);
 }
