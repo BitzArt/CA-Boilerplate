@@ -25,11 +25,11 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
     {
         var now = DateTimeOffset.UtcNow;
 
-        UpdateAuditable(now);
-        HandleSoftDelete(now);
+        HandleDeletables(now);
+        HandleAuditables(now);
     }
 
-    private void UpdateAuditable(DateTimeOffset now)
+    private void HandleAuditables(DateTimeOffset now)
     {
         var insertedEntries = ChangeTracker.Entries()
             .Where(x => x.State == EntityState.Added)
@@ -55,8 +55,17 @@ public abstract class AppDbContext(DbContextOptions options) : DbContext(options
         }
     }
 
-    private void HandleSoftDelete(DateTimeOffset now)
+    private void HandleDeletables(DateTimeOffset now)
     {
+        var toHardDelete = ChangeTracker
+            .Entries<IHardDeletable>()
+            .Where(e => e.Entity.IsHardDeleted == true);
+
+        foreach (var entry in toHardDelete)
+        {
+            entry.State = EntityState.Deleted;
+        }
+
         var toSoftDelete = ChangeTracker
             .Entries<ISoftDeletable>()
             .Where(e => e.State == EntityState.Deleted);
