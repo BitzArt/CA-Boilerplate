@@ -86,7 +86,7 @@ public static class DeletableConfigurationExtensions
             return;
         }
 
-        var deletionInfoType = entityType.GetGenericArguments()[0];
+        var deletionInfoType = softDeletableInterface.GetGenericArguments()[0];
 
         // NOTE: We do not configure descendants of DeletionInfo here by design
         if (deletionInfoType != typeof(DeletionInfo))
