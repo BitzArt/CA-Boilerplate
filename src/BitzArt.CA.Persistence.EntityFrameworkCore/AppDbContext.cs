@@ -15,9 +15,5 @@ public abstract class AppDbContext : DbContext
 
     /// <inheritdoc/>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.AddInterceptors(
-            [
-                new DeletablesInterceptor(),
-                new AuditablesInterceptor()
-            ]);
+        => optionsBuilder.AddBoilerplateInterceptors();
 }
