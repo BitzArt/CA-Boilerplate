@@ -38,7 +38,7 @@ public static class DeletableConfigurationExtensions
     private static void ConfigureIsDeletedProperty<TEntity>(EntityTypeBuilder<TEntity> builder)
         where TEntity : class, ISoftDeletable
     {
-        builder.Property(nameof(ISoftDeletable.IsDeleted)).IsRequired(true);
+        builder.Property(nameof(ISoftDeletable.IsDeleted)).IsRequired(true).HasDefaultValue(false);
 
         builder.HasIndex(nameof(ISoftDeletable.IsDeleted));
 
