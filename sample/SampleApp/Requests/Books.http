@@ -29,4 +29,10 @@ Content-Type: application/json
 
 ###
 
-DELETE {{baseUrl}}/books/{{bookId}}
+@hard=false
+
+DELETE {{baseUrl}}/books/{{bookId}}?hard={{hard}}
+
+###
+
+POST {{baseUrl}}/books/{{bookId}}/restore

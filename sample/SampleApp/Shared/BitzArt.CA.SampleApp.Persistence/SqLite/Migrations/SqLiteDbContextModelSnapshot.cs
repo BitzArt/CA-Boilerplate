@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BitzArt.CA.SampleApp.Persistence.SqLite.Migrations
+namespace BitzArt.CA.SampleApp.Persistence.Migrations
 {
     [DbContext(typeof(SqLiteDbContext))]
     partial class SqLiteDbContextModelSnapshot : ModelSnapshot
@@ -15,17 +15,28 @@ namespace BitzArt.CA.SampleApp.Persistence.SqLite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
 
             modelBuilder.Entity("BitzArt.CA.SampleApp.Core.Book", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTimeOffset>("LastUpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
@@ -35,7 +46,9 @@ namespace BitzArt.CA.SampleApp.Persistence.SqLite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Book");
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Books", (string)null);
                 });
 #pragma warning restore 612, 618
         }

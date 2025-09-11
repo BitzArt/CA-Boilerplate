@@ -1,7 +1,8 @@
+using BitzArt.CA.Persistence;
+using BitzArt.CA.SampleApp.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BitzArt.CA.Persistence;
 
 namespace BitzArt.CA.SampleApp.Persistence;
 
@@ -17,6 +18,7 @@ public static class AddPersistenceExtension
     {
         var settings = services.AddPersistenceSettings(configuration);
         services.AddSqLite(settings.ConnectionString);
-        services.AddRepositories();
+
+        services.AddScoped<IRepository<Book>, AppDbRepository<Book, int?>>();
     }
 }

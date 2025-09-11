@@ -1,3 +1,4 @@
+using BitzArt.ApiExceptions.AspNetCore;
 using BitzArt.CA.Persistence;
 using BitzArt.CA.SampleApp.Infrastructure;
 using BitzArt.CA.SampleApp.Persistence;
@@ -15,9 +16,14 @@ internal class Program
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddApiExceptionHandler(handler =>
+        {
+            handler.DisplayInnerExceptions = true;
+        });
 
         var app = builder.Build();
 
+        app.UseApiExceptionHandler();
         app.MapControllers();
 
         app.Init(x =>

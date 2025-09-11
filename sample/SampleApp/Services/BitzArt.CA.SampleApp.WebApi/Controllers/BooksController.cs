@@ -1,10 +1,11 @@
 ﻿using BitzArt.CA.SampleApp.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BitzArt.CA.SampleApp;
 
 [Route("books")]
-public class BooksController(IBookRepository bookRepository) : ControllerBase
+public class BooksController(IRepository<Book> bookRepository) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
@@ -46,14 +47,32 @@ public class BooksController(IBookRepository bookRepository) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+    public async Task<IActionResult> DeleteAsync(
+        [FromRoute(Name = "id")] int id,
+        [FromQuery(Name = "hard")] bool hardDelete = false)
     {
         var book = await bookRepository.FirstOrDefaultAsync(books => books.Where(x => x.Id == id))
             ?? throw new Exception($"Book with ID '{id}' was not found.");
 
-        bookRepository.Remove(book);
+        bookRepository.Remove(book, hardDelete);
+
         await bookRepository.SaveChangesAsync();
 
         return Ok();
+    }
+
+    [HttpPost("{id:int}/restore")]
+    public async Task<IActionResult> RestoreAsync([FromRoute(Name = "id")] int id)
+    {
+        var book = await bookRepository.FirstOrDefaultAsync(books => books
+            .IgnoreQueryFilters()
+            .DeletedOnly()
+            .Where(x => x.Id == id))
+            ?? throw new Exception($"No soft-deleted Book with ID '{id}' found.");
+
+        book.IsDeleted = false;
+        await bookRepository.SaveChangesAsync();
+
+        return Ok(book);
     }
 }
