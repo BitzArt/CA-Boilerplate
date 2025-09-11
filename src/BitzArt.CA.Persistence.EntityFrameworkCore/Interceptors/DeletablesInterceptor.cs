@@ -43,11 +43,9 @@ internal class DeletablesInterceptor : ISaveChangesInterceptor
             if (entity.IsDeleted == true)
             {
                 // Already marked as deleted, no need to update again.
-                // e.g. if the entity was loaded from the database with IsDeleted = true,
-                // or the value was set explicitly before calling SaveChanges.
+                // The value was already true before this deletion attempt.
 
                 // NOTE: We also do not update DeletionInfo in this case by design.
-                entry.State = EntityState.Unchanged;
                 continue;
             }
 
