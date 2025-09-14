@@ -31,7 +31,7 @@ public static class DbContextExtensions
         {
             entity.HardDelete();
         }
-        
+
         context.Remove(entity);
     }
 }

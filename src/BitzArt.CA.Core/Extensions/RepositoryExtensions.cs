@@ -13,7 +13,7 @@ public static class RepositoryExtensions
         {
             entity.HardDelete();
         }
-        
+
         repository.Remove(entity);
     }
 }

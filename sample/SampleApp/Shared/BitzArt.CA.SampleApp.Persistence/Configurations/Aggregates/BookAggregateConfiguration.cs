@@ -21,7 +21,7 @@ internal class BookAggregateConfiguration : IEntityTypeConfiguration<Book>
 
         builder.ConfigureAuditableProperties();
         builder.ConfigureDeletableProperties();
-        
+
         builder.HasKey(x => x.Id);
     }
 }

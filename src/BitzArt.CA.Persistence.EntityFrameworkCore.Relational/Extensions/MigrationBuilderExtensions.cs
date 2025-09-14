@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
+﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 
 namespace Microsoft.EntityFrameworkCore.Migrations;
 

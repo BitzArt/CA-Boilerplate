@@ -21,7 +21,7 @@ internal class DebugAppDbInitializingService<TContext>(TContext db, ILogger<AppD
 
     protected override async Task MigrateAsync(TContext db, CancellationToken ct)
     {
-        
+
 
         var applied = await db.Database.GetAppliedMigrationsAsync(ct);
         var current = db.Database.GetMigrations();
