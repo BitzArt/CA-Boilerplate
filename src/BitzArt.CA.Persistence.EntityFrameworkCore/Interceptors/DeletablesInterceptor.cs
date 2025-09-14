@@ -1,18 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace BitzArt.CA.Persistence;
 
-internal class DeletablesInterceptor : ISaveChangesInterceptor
+internal class DeletablesInterceptor : OnSaveInterceptorBase
 {
-    /// <inheritdoc/>
-    public ValueTask<InterceptionResult<int>> SavingChangesAsync(
-        DbContextEventData eventData,
-        InterceptionResult<int> result,
-        CancellationToken cancellationToken = default)
+    protected sealed override void OnSave(DbContext dbContext)
     {
         var now = DateTimeOffset.UtcNow;
-        var dbContext = eventData.Context!;
 
         var toHardDelete = dbContext.ChangeTracker
             .Entries<IHardDeletable>()
@@ -56,7 +50,5 @@ internal class DeletablesInterceptor : ISaveChangesInterceptor
                 entityWithDefaultDeletionInfo.DeletionInfo = new(now);
             }
         }
-
-        return new(result);
     }
 }

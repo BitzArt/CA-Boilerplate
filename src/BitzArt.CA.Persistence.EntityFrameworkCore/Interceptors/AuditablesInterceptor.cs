@@ -1,18 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace BitzArt.CA.Persistence;
 
-internal class AuditablesInterceptor : ISaveChangesInterceptor
+internal class AuditablesInterceptor : OnSaveInterceptorBase
 {
-    /// <inheritdoc/>
-    public ValueTask<InterceptionResult<int>> SavingChangesAsync(
-        DbContextEventData eventData,
-        InterceptionResult<int> result,
-        CancellationToken cancellationToken = default)
+    protected sealed override void OnSave(DbContext dbContext)
     {
         var now = DateTimeOffset.UtcNow;
-        var dbContext = eventData.Context!;
 
         var insertedEntries = dbContext.ChangeTracker.Entries()
             .Where(x => x.State == EntityState.Added)
@@ -36,7 +30,5 @@ internal class AuditablesInterceptor : ISaveChangesInterceptor
             if (entry is not IAuditable auditable) continue;
             auditable.LastUpdatedAt = now;
         }
-
-        return new(result);
     }
 }
