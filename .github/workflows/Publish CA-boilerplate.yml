@@ -12,8 +12,8 @@ env:
 
 jobs:
 
-  OCPI-Net:
-    name: OCPI-Net
+  Release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
 

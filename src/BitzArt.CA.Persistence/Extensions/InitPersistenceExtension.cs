@@ -3,7 +3,7 @@
 namespace BitzArt.CA.Persistence;
 
 /// <summary>
-/// Extension methods for initializing the persistence layer.
+/// Extension methods for initializing the Persistence layer.
 /// </summary>
 public static class InitPersistenceExtension
 {

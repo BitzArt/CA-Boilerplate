@@ -6,7 +6,7 @@ namespace BitzArt.CA.Persistence;
 /// <summary>
 /// Extension methods for configuring Persistence layer.
 /// </summary>
-public static class AddPersistenceExtension
+public static class AddPersistenceSettingsExtension
 {
     /// <summary>
     /// Configures Persistence layer in an <see cref="IServiceCollection"/>.

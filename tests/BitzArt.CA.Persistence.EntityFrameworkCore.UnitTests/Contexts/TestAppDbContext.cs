@@ -20,8 +20,12 @@ internal class TestAppDbContext : AppDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        base.OnConfiguring(optionsBuilder.UseSqlite(_connection!,
-            x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+        base.OnConfiguring(optionsBuilder
+            .UseSqlite(_connection!, sqlite =>
+                {
+                    sqlite.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                })
+            .AddBoilerplateInterceptors());
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

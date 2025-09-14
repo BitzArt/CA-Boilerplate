@@ -12,8 +12,4 @@ public abstract class AppDbContext : DbContext
 
     /// <inheritdoc/>
     public AppDbContext() : base() { }
-
-    /// <inheritdoc/>
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.AddBoilerplateInterceptors();
 }

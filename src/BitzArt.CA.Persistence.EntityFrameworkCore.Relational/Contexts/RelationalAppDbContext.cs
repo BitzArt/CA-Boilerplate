@@ -17,6 +17,7 @@ public abstract class RelationalAppDbContext<TConfigurationPointer>(DbContextOpt
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TConfigurationPointer).Assembly);
     }
 }
