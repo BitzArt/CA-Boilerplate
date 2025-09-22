@@ -3,7 +3,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace BitzArt.CA.Persistence;
 
-internal abstract class OnSaveInterceptorBase : ISaveChangesInterceptor
+/// <summary>
+/// Base class for interceptors that need to perform actions before saving changes to the database.
+/// </summary>
+public abstract class OnSaveInterceptorBase : ISaveChangesInterceptor
 {
     /// <inheritdoc/>
     public ValueTask<InterceptionResult<int>> SavingChangesAsync(
@@ -16,6 +19,7 @@ internal abstract class OnSaveInterceptorBase : ISaveChangesInterceptor
         return new(result);
     }
 
+    /// <inheritdoc/>
     public InterceptionResult<int> SavingChanges(
         DbContextEventData eventData,
         InterceptionResult<int> result)
@@ -25,5 +29,9 @@ internal abstract class OnSaveInterceptorBase : ISaveChangesInterceptor
         return result;
     }
 
+    /// <summary>
+    /// Called before changes are saved to the database.
+    /// </summary>
+    /// <param name="dbContext"></param>
     protected abstract void OnSave(DbContext dbContext);
 }

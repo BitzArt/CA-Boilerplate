@@ -8,6 +8,12 @@ internal class TestAppDbContext : AppDbContext
     private readonly Guid _id;
     private readonly string _fileName;
     private readonly SqliteConnection _connection;
+    private readonly Action<DbContextOptionsBuilder>? _configure;
+
+    public TestAppDbContext(Action<DbContextOptionsBuilder>? configure) : this()
+    {
+        _configure = configure;
+    }
 
     public TestAppDbContext()
     {
@@ -20,12 +26,15 @@ internal class TestAppDbContext : AppDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        base.OnConfiguring(optionsBuilder
+        var result = optionsBuilder
             .UseSqlite(_connection!, sqlite =>
                 {
                     sqlite.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 })
-            .AddBoilerplateInterceptors());
+            .AddBoilerplateInterceptors();
+
+        base.OnConfiguring(result);
+        _configure?.Invoke(result);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,10 +57,10 @@ internal class TestAppDbContext : AppDbContext
         }
     }
 
-    public static async Task<TestAppDbContext> PrepareAsync(bool createDeletables = false)
+    public static async Task<TestAppDbContext> PrepareAsync(Action<DbContextOptionsBuilder>? configure = null, bool createDeletables = false)
     {
         // Arrange
-        var context = new TestAppDbContext();
+        var context = new TestAppDbContext(configure);
         await context.Database.EnsureCreatedAsync();
 
         // Warmup

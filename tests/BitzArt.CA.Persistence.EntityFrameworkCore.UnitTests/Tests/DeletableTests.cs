@@ -8,7 +8,7 @@ public class DeletableTests
     public async Task SaveChanges_SoftDeletableEntityUnchanged_ShouldKeepUnchanged()
     {
         // Arrange
-        using var db = await TestAppDbContext.PrepareAsync(true);
+        using var db = await TestAppDbContext.PrepareAsync(createDeletables: true);
 
         var entity = await db.Set<TestSoftDeletable>()
             .FirstAsync();
@@ -26,7 +26,7 @@ public class DeletableTests
     public async Task SaveChanges_SoftDeletableEntityRemoved_ShouldSoftDelete()
     {
         // Arrange
-        using var db = await TestAppDbContext.PrepareAsync(true);
+        using var db = await TestAppDbContext.PrepareAsync(createDeletables: true);
 
         var entity = await db.Set<TestSoftDeletable>()
             .FirstAsync();
@@ -49,7 +49,7 @@ public class DeletableTests
     public async Task SaveChanges_HardDeletableEntityRemoved_ShouldSoftDelete()
     {
         // Arrange
-        using var db = await TestAppDbContext.PrepareAsync(true);
+        using var db = await TestAppDbContext.PrepareAsync(createDeletables: true);
 
         var entity = await db.Set<TestHardDeletable>()
             .FirstAsync();
@@ -72,7 +72,7 @@ public class DeletableTests
     public async Task SaveChanges_HardDeletableEntityHardRemovedViaDbContext_ShouldHardDelete()
     {
         // Arrange
-        using var db = await TestAppDbContext.PrepareAsync(true);
+        using var db = await TestAppDbContext.PrepareAsync(createDeletables: true);
 
         var entity = await db.Set<TestHardDeletable>()
             .FirstAsync();
@@ -95,7 +95,7 @@ public class DeletableTests
     public async Task SaveChanges_HardDeletableEntityHardRemovedViaProperty_ShouldHardDelete()
     {
         // Arrange
-        using var db = await TestAppDbContext.PrepareAsync(true);
+        using var db = await TestAppDbContext.PrepareAsync(createDeletables: true);
 
         var entity = await db.Set<TestHardDeletable>()
             .FirstAsync();
@@ -118,7 +118,7 @@ public class DeletableTests
     public async Task SaveChanges_HardDeletableEntityHardRemovedViaHardDeleteMethod_ShouldHardDelete()
     {
         // Arrange
-        using var db = await TestAppDbContext.PrepareAsync(true);
+        using var db = await TestAppDbContext.PrepareAsync(createDeletables: true);
 
         var entity = await db.Set<TestHardDeletable>()
             .FirstAsync();

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BitzArt.CA.Persistence;
 
-internal class TestHardDeletableEntityConfiguration : IEntityTypeConfiguration<TestHardDeletable>
+public class TestHardDeletableEntityConfiguration : IEntityTypeConfiguration<TestHardDeletable>
 {
     public void Configure(EntityTypeBuilder<TestHardDeletable> builder)
     {

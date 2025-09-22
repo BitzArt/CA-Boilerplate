@@ -1,6 +1,6 @@
 ﻿namespace BitzArt.CA.Persistence;
 
-internal class TestHardDeletable : IHardDeletable
+public class TestHardDeletable : IHardDeletable
 {
     public Guid? Id { get; set; }
 

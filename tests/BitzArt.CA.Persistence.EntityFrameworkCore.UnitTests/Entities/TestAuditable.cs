@@ -1,6 +1,6 @@
 ﻿namespace BitzArt.CA.Persistence;
 
-internal class TestAuditable : IAuditable
+public class TestAuditable : IAuditable
 {
     public Guid? Id { get; set; }
 

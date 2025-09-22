@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BitzArt.CA.Persistence;
 
-internal class TestAuditableEntityConfiguration : IEntityTypeConfiguration<TestAuditable>
+public class TestAuditableEntityConfiguration : IEntityTypeConfiguration<TestAuditable>
 {
     public void Configure(EntityTypeBuilder<TestAuditable> builder)
     {
