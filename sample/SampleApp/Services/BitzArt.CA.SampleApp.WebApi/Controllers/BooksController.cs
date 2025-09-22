@@ -8,10 +8,20 @@ namespace BitzArt.CA.SampleApp;
 public class BooksController(IRepository<Book> bookRepository) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllAsync([FromQuery(Name = "property")] string? property)
     {
-        var books = await bookRepository.GetAllAsync();
-        return Ok(books);
+        var result = await bookRepository.GetAllAsync(q =>
+        {
+            // showcasing dynamic query projection
+            if (string.Equals(property, "title", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return q.Select(book => book.Title);
+            }
+
+            return q;
+        });
+
+        return Ok(result);
     }
 
     [HttpGet("{id:int}")]
