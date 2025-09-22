@@ -8,21 +8,24 @@ public class ForwardableTests
     public async Task PropertyForwardingInterceptor_TestForwardable_ShouldForward()
     {
         // Arrange
-        var called = false;
+        var invokeCalled = false;
+        var forwardCalled = false;
         string? forwardedName = null;
 
         using var db = await TestAppDbContext.PrepareAsync(options =>
         {
-            options.AddInterceptors(new PropertyForwardingInterceptor<TestForwardable>(forward =>
+            options.AddInterceptors(new DirectiveInterceptor<TestForwardable>(forward =>
             {
-                forward.From(x => x.Name).To((_, value) =>
+                forward.Invoke(_ => invokeCalled = true);
+
+                forward.Forward(x => x.Name).To((_, value) =>
                 {
-                    called = true;
+                    forwardCalled = true;
                     forwardedName = value;
                 });
 
-                forward.From(x => x.Name).To(x => x.ForwardedName);
-                forward.From(x => x.Name).To("ShadowName");
+                forward.Forward(x => x.Name).To(x => x.ForwardedName);
+                forward.Forward(x => x.Name).To("ShadowName");
             }));
         });
         const string name = "some-name";
@@ -35,7 +38,8 @@ public class ForwardableTests
         // Assert
         db.ChangeTracker.Clear();
 
-        Assert.True(called);
+        Assert.True(invokeCalled);
+        Assert.True(forwardCalled);
         Assert.Equal(name, forwardedName);
 
         entity = await db.Set<TestForwardable>().FirstAsync();
