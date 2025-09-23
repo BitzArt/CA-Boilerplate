@@ -25,7 +25,6 @@ public sealed class DirectiveInterceptor<TEntity> : OnSaveInterceptorBase
     {
         var entities = dbContext.ChangeTracker
             .Entries<TEntity>()
-            .Where(e => e.State > EntityState.Unchanged)
             .Select(e => e.Entity);
 
         foreach (var entity in entities)
