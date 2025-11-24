@@ -59,12 +59,13 @@ internal class TestAppDbContext : AppDbContext
 
     public static async Task<TestAppDbContext> PrepareAsync(Action<DbContextOptionsBuilder>? configure = null, bool createDeletables = false)
     {
-        // Arrange
         var context = new TestAppDbContext(configure);
         await context.Database.EnsureCreatedAsync();
 
         // Warmup
-        _ = context.Model;
+        var warmupEntity = new WarmupEntity();
+        context.Add(warmupEntity);
+        await context.SaveChangesAsync();
 
         if (createDeletables)
         {
